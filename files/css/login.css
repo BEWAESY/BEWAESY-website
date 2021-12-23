@@ -1,0 +1,50 @@
+body {
+    background: url("../images/blob-scene-haikei.svg") no-repeat fixed;
+    background-size: cover;
+}
+
+@media screen and (min-width: 600px) {
+    body {
+        --login-container-width: 500px;
+    }
+}
+@media screen and (max-width: 599px) {
+    body {
+        --login-container-width: 90%;
+    }
+}
+
+.login-container {
+    height: 500px;
+    width: var(--login-container-width);
+
+    background-color: white;
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.356);
+    border-radius: 15px;
+
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.login-goback {
+    max-width: 50px;
+    margin: 50px auto;/*
+
+    display: flex;
+    justify-content: center;
+    align-items: center;*/
+
+}
+
+.login-logo {
+    /*width: 50px;*/
+    /*margin: 50px auto;*/
+    margin-top: 30px;
+    max-width: 50px;
+}
+.login-logo-text {
+    /*text-align: center;*/
+}

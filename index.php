@@ -19,7 +19,7 @@
             </div>
 
             <form class="justify-content-end">
-                        <button class="btn btn-outline-secondary me-2" type="button" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+                        <button class="btn btn-outline-secondary me-2" type="button" onclick="location.href='login';">Login</button>
                         <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#registrationModal">Registrieren</button>
             </form>
         </div>
