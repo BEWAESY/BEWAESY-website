@@ -5,7 +5,7 @@ body {
 
 @media screen and (min-width: 600px) {
     body {
-        --login-container-width: 500px;
+        --login-container-width: 400px;
     }
 }
 @media screen and (max-width: 599px) {
@@ -15,6 +15,12 @@ body {
 }
 
 .login-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 120px 30px auto auto;
+    justify-items: center;
+    align-items: center;
+
     height: 500px;
     width: var(--login-container-width);
 
@@ -30,21 +36,10 @@ body {
 }
 
 .login-goback {
-    max-width: 50px;
-    margin: 50px auto;/*
-
-    display: flex;
-    justify-content: center;
-    align-items: center;*/
-
+    padding: 5px;
+    cursor: pointer;
 }
-
 .login-logo {
-    /*width: 50px;*/
-    /*margin: 50px auto;*/
-    margin-top: 30px;
     max-width: 50px;
 }
-.login-logo-text {
-    /*text-align: center;*/
-}
+

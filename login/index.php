@@ -11,10 +11,28 @@
 </head>
 <body>
     <div class="login-container">
-        <div class="login-goback">
+        <div class="login-goback" onclick="location.href='..';">
             <img src="../files/images/bootstrap-logo.svg" class="login-logo">
-            <p class="login-logo-text">BEWÄSY</p>
         </div>
+
+        <h1 style="font-size: 25px;">Sign in to <b>BEWÄSY</b></h1>
+
+        <form action="." method="POST" style="width: 90%">
+            <div class="mb-2 mt-2">
+                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <input name="email" type="email" class="form-control" id="exampleInputEmail1">
+            </div>
+            <div class="mb-2">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input name="password" type="password" class="form-control" id="exampleInputPassword1" aria-describedby="passwordHelp">
+                <div id="passwordHelp" class="form-text">Passwort vergessen? <a href=".">Hier Zurücksetzen</a></div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="float: right;">Login</button>
+        </form>
+
+        <hr style="width: 90%;">
+
+        <p>Noch kein Account? <a href=".">Registrieren</a></p>
     </div>
 
     
