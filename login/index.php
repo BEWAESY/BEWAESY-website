@@ -55,7 +55,7 @@
             <form id="loginForm" class="needs-validation" action="." method="POST" style="width: 90%" novalidate>
                 <div class="mb-2 mt-2">
                     <label for="userEmail" class="form-label">E-Mail</label>
-                    <input name="email" type="email" class="form-control" id="userEmail" autofocus required>
+                    <input name="email" type="email" class="form-control" id="userEmail" <?php echo(isset($email) ? "value='".$email."'" : "autofocus"); ?> required>
                     <div class="invalid-feedback">
                         Bitte gib eine gültige E-Mail ein
                     </div>
@@ -64,7 +64,7 @@
 
                 <div class="mb-2">
                     <label for="userPassword" class="form-label">Passwort</label>
-                    <input name="password" type="password" class="form-control" id="userPassword" aria-describedby="passwordHelp" required>
+                    <input name="password" type="password" class="form-control" id="userPassword" aria-describedby="passwordHelp" required <?php if (isset($email)) echo("autofocus"); ?>>
                     <div class="invalid-feedback">
                         Bitte gib ein Passwort ein
                     </div>
