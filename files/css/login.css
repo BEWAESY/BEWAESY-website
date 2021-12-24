@@ -14,6 +14,24 @@ body {
     }
 }
 
+.center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: var(--login-container-width);
+}
+
+.alert {
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.356);
+    border-radius: 15px;
+}
+.alert button {
+    border-radius: 15px;
+}
+
 .login-container {
     display: grid;
     grid-template-columns: 1fr;
@@ -22,17 +40,10 @@ body {
     align-items: center;
 
     height: 500px;
-    width: var(--login-container-width);
 
     background-color: white;
     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.356);
     border-radius: 15px;
-
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
 
 .login-goback {

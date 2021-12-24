@@ -10,37 +10,45 @@
     <link href="../files/css/login.css" rel="stylesheet">
 </head>
 <body>
-    <div class="login-container">
-        <div class="login-goback" onclick="location.href='..';">
-            <img src="../files/images/bootstrap-logo.svg" class="login-logo">
+    <div class="center">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            E-Mail oder Passwort falsch
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
 
-        <h1 style="font-size: 25px;">Login <b>BEWÄSY</b></h1>
 
-        <form class="needs-validation" action="." method="POST" style="width: 90%" novalidate>
-            <div class="mb-2 mt-2">
-                <label for="userEmail" class="form-label">E-Mail</label>
-                <input name="email" type="email" class="form-control" id="userEmail" autofocus required>
-                <div class="invalid-feedback">
-                    Bitte gib eine gültige E-Mail ein
-                </div>
+        <div class="login-container">
+            <div class="login-goback" onclick="location.href='..';">
+                <img src="../files/images/bootstrap-logo.svg" class="login-logo">
             </div>
 
+            <h1 style="font-size: 25px;">Login <b>BEWÄSY</b></h1>
 
-            <div class="mb-2">
-                <label for="userPassword" class="form-label">Passwort</label>
-                <input name="password" type="password" class="form-control" id="userPassword" aria-describedby="passwordHelp" required>
-                <div class="invalid-feedback">
-                    Bitte gib ein Passwort ein
+            <form class="needs-validation" action="." method="POST" style="width: 90%" novalidate>
+                <div class="mb-2 mt-2">
+                    <label for="userEmail" class="form-label">E-Mail</label>
+                    <input name="email" type="email" class="form-control" id="userEmail" autofocus required>
+                    <div class="invalid-feedback">
+                        Bitte gib eine gültige E-Mail ein
+                    </div>
                 </div>
-                <div id="passwordHelp" class="form-text"><a href="#">Passwort vergessen?</a></div>
-            </div>
-            <button type="submit" class="btn btn-primary" style="float: right;" onclick="sendLogin()">Login</button>
-        </form>
 
-        <hr style="width: 90%;">
 
-        <p>Noch kein Account? <a href="../sign-up">Registrieren</a></p>
+                <div class="mb-2">
+                    <label for="userPassword" class="form-label">Passwort</label>
+                    <input name="password" type="password" class="form-control" id="userPassword" aria-describedby="passwordHelp" required>
+                    <div class="invalid-feedback">
+                        Bitte gib ein Passwort ein
+                    </div>
+                    <div id="passwordHelp" class="form-text"><a href="password-reset">Passwort vergessen?</a></div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="float: right;" onclick="sendLogin()">Login</button>
+            </form>
+
+            <hr style="width: 90%;">
+
+            <p>Noch kein Account? <a href="sign-up">Registrieren</a></p>
+        </div>
     </div>
 
     
