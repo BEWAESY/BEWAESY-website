@@ -17,17 +17,25 @@
 
         <h1 style="font-size: 25px;">Login <b>BEWÄSY</b></h1>
 
-        <form action="." method="POST" style="width: 90%">
+        <form class="needs-validation" action="." method="POST" style="width: 90%" novalidate>
             <div class="mb-2 mt-2">
-                <label for="exampleInputEmail1" class="form-label">E-Mail</label>
-                <input name="email" type="email" class="form-control" id="exampleInputEmail1" autofocus>
+                <label for="userEmail" class="form-label">E-Mail</label>
+                <input name="email" type="email" class="form-control" id="userEmail" autofocus required>
+                <div class="invalid-feedback">
+                    Bitte gib eine gültige E-Mail ein
+                </div>
             </div>
+
+
             <div class="mb-2">
-                <label for="exampleInputPassword1" class="form-label">Passwort</label>
-                <input name="password" type="password" class="form-control" id="exampleInputPassword1" aria-describedby="passwordHelp">
+                <label for="userPassword" class="form-label">Passwort</label>
+                <input name="password" type="password" class="form-control" id="userPassword" aria-describedby="passwordHelp" required>
+                <div class="invalid-feedback">
+                    Bitte gib ein Passwort ein
+                </div>
                 <div id="passwordHelp" class="form-text"><a href="#">Passwort vergessen?</a></div>
             </div>
-            <button type="submit" class="btn btn-primary" style="float: right;">Login</button>
+            <button type="submit" class="btn btn-primary" style="float: right;" onclick="sendLogin()">Login</button>
         </form>
 
         <hr style="width: 90%;">
@@ -37,6 +45,23 @@
 
     
 
+    <script>
+        function sendLogin() {
+            var forms = document.querySelectorAll(".needs-validation");
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
