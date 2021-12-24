@@ -1,3 +1,31 @@
+<?php
+    session_start();
+    include "../files/php/sql.php";
+
+    $wrongCredentials = false;
+
+    $email = @$_POST["email"];
+    $password = @$_POST["password"];
+
+    // Check if everything is there
+    if (isset($email) && isset($password)) {
+        // If email and password where sent, check them
+        $statement = $pdo->prepare("SELECT * FROM users WHERE email = :email");
+        $result = $statement->execute(array("email" => $email));
+        $user = $statement->fetch();
+
+        // Check data
+        if ($user !== false && password_verify($password, $user["password"])) {
+            $_SESSION["userid"] = $user["id"];
+            header("Location: ../dashboard");
+        } else {
+            $wrongCredentials = true;
+        }
+    }
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +39,7 @@
 </head>
 <body>
     <div class="center">
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert" <?php if ($wrongCredentials == false) echo("style='display: none;;'") ?>>
             E-Mail oder Passwort falsch
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
@@ -24,7 +52,7 @@
 
             <h1 style="font-size: 25px;">Login <b>BEWÄSY</b></h1>
 
-            <form class="needs-validation" action="." method="POST" style="width: 90%" novalidate>
+            <form id="loginForm" class="needs-validation" action="." method="POST" style="width: 90%" novalidate>
                 <div class="mb-2 mt-2">
                     <label for="userEmail" class="form-label">E-Mail</label>
                     <input name="email" type="email" class="form-control" id="userEmail" autofocus required>
@@ -42,7 +70,7 @@
                     </div>
                     <div id="passwordHelp" class="form-text"><a href="password-reset">Passwort vergessen?</a></div>
                 </div>
-                <button type="submit" class="btn btn-primary" style="float: right;" onclick="sendLogin()">Login</button>
+                <button id="loginSubmit" type="submit" class="btn btn-primary" style="float: right;">Login</button>
             </form>
 
             <hr style="width: 90%;">
@@ -54,7 +82,9 @@
     
 
     <script>
-        function sendLogin() {
+        activateValidation();
+
+        function activateValidation() {
             var forms = document.querySelectorAll(".needs-validation");
 
             // Loop over them and prevent submission
@@ -63,13 +93,24 @@
                     if (!form.checkValidity()) {
                         event.preventDefault()
                         event.stopPropagation()
+                        form.classList.add('was-validated')
+                    } else {
+                        setTimeout(sendLogin, 1);
                     }
 
-                    form.classList.add('was-validated')
+                    //form.classList.add('was-validated')
                 }, false)
             })
         }
+
+        function sendLogin() {
+            $("#loginForm").removeClass("was-validated");
+
+            // Disable form
+            $("#userEmail, #userPassword, #loginSubmit").prop("disabled", true);
+        }
     </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
