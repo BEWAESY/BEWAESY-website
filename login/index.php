@@ -15,24 +15,24 @@
             <img src="../files/images/bootstrap-logo.svg" class="login-logo">
         </div>
 
-        <h1 style="font-size: 25px;">Sign in to <b>BEWÄSY</b></h1>
+        <h1 style="font-size: 25px;">Login <b>BEWÄSY</b></h1>
 
         <form action="." method="POST" style="width: 90%">
             <div class="mb-2 mt-2">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input name="email" type="email" class="form-control" id="exampleInputEmail1">
+                <label for="exampleInputEmail1" class="form-label">E-Mail</label>
+                <input name="email" type="email" class="form-control" id="exampleInputEmail1" autofocus>
             </div>
             <div class="mb-2">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <label for="exampleInputPassword1" class="form-label">Passwort</label>
                 <input name="password" type="password" class="form-control" id="exampleInputPassword1" aria-describedby="passwordHelp">
-                <div id="passwordHelp" class="form-text">Passwort vergessen? <a href=".">Hier Zurücksetzen</a></div>
+                <div id="passwordHelp" class="form-text"><a href="#">Passwort vergessen?</a></div>
             </div>
             <button type="submit" class="btn btn-primary" style="float: right;">Login</button>
         </form>
 
         <hr style="width: 90%;">
 
-        <p>Noch kein Account? <a href=".">Registrieren</a></p>
+        <p>Noch kein Account? <a href="../sign-up">Registrieren</a></p>
     </div>
 
     
