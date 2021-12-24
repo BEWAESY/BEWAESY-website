@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include "../files/php/sql.php";
+    include "../files/php/config/sql.php";
 
     $wrongCredentials = false;
 

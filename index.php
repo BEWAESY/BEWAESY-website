@@ -1,3 +1,5 @@
+<?php include "files/php/config/config.php" ?>
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -9,23 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 <body>
-    <nav class="navbar navbar-light bg-light">
-        <div class="container-fluid">
-            <div class="justify-content-start">
-                <a class="navbar-brand" href="#">
-                    <img src="files/images/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
-                    BEWÄSY
-                </a>
-            </div>
-
-            <form class="justify-content-end">
-                        <a href="login"><button class="btn btn-outline-secondary me-2" type="button">Login</button></a>
-                        <a href="login/sign-up"><button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#registrationModal">Registrieren</button></a>
-            </form>
-        </div>
-    </nav>
-
-
+    <?php include "files/php/templates/nav.php" ?>
 
     <h1>LANDING PAGE</h1>
 
