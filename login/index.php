@@ -2,6 +2,14 @@
     session_start();
     include "../files/php/config/sql.php";
 
+
+    // Check if user is already logged in, and if yes, redirect
+    if (isset($_SESSION["userid"])) {
+        header("Location: ../dashboard");
+        die();
+    }
+
+
     $wrongCredentials = false;
 
     $email = @$_POST["email"];
@@ -18,6 +26,7 @@
         if ($user !== false && password_verify($password, $user["password"])) {
             $_SESSION["userid"] = $user["id"];
             header("Location: ../dashboard");
+            die();
         } else {
             $wrongCredentials = true;
         }
