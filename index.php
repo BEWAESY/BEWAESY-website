@@ -1,4 +1,5 @@
 <?php include "files/php/config/config.php" ?>
+<?php session_start(); ?>
 
 <!DOCTYPE html>
 <html lang="de">

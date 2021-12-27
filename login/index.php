@@ -25,6 +25,7 @@
         // Check data
         if ($user !== false && password_verify($password, $user["password"])) {
             $_SESSION["userid"] = $user["id"];
+            $_SESSION["userEmail"] = $user["email"];
             header("Location: ../dashboard");
             die();
         } else {
