@@ -74,6 +74,12 @@
                                 <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
                                 <label class="btn btn-outline-primary shadow-none" for="btnradio2">Manuell</label>
                             </div>
+
+                            <section id="automatic">
+                                <select class="form-select mt-3" aria-label="Default select example">
+                                    <?php include "../files/php/templates/flower-menu.php" ?>
+                                </select>
+                            </section>
                         </div>
                     </div>
                 </div>
