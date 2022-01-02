@@ -9,9 +9,9 @@
 .sidebar {
     height: 100%;
 
-    background-color: rgba(161, 161, 161, 0.199);
+    /*background-color: rgba(161, 161, 161, 0.199);
     box-shadow: 1px 0 10px rgb(156, 156, 156);
-    clip-path: polygon(0% 0%, 120% 0%, 120% 100%, 0% 100%);
+    clip-path: polygon(0% 0%, 120% 0%, 120% 100%, 0% 100%);*/
 }
 
 .accordion {

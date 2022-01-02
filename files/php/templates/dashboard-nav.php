@@ -1,4 +1,4 @@
-<div class="sidebar p-3 bg-light">
+<div class="sidebar p-3 border-end">
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
             <a href="./" class="nav-link <?php echo($page == "dashboard" ? "active" : "link-dark"); ?>" aria-current="page">
