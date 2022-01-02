@@ -40,19 +40,48 @@
                     </h2>
                     <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                         <div class="accordion-body">
-                            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                                <label class="btn btn-outline-primary shadow-none" for="btnradio1">Automatik</label>
-
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                                <label class="btn btn-outline-primary shadow-none" for="btnradio2">Manuell</label>
-                            </div>
-
-                            <section id="automatic">
-                                <select class="form-select mt-3" aria-label="Default select example">
+                            <div id="automatic">
+                                <h2 class="mb-3">Automatikmodus</h2>
+                                <select id="selectPlant" class="form-select" aria-label="Default select example">
                                     <?php include "../files/php/templates/flower-menu.php" ?>
                                 </select>
-                            </section>
+                            </div>
+
+                            <hr class="mt-4">
+
+                            <form>
+                                <h2 class="mb-3">Einstellungen</h2>
+
+                                <label for="cooldown" class="form-label">Cooldown</label>
+                                <input type="number" id="cooldown" class="form-control" aria-describedby="cooldownHelpBlock" value="0" min="0">
+                                <div id="passwordHelpBlock" class="form-text">
+                                    0 eintragen für keinen Cooldown
+                                </div>
+
+                                <label for="maxSeconds" class="form-label mt-3">Max. Sekunden / Tag</label>
+                                <input type="number" id="maxSeconds" class="form-control" aria-describedby="maxSecondsHelpBlock" value="0" min="0">
+                                <div id="maxSecondsHelpBlock" class="form-text">
+                                    0 eintragen für kein Maximum
+                                </div>
+
+                                <hr class="mt-4">
+
+                                <h2 class="mt-3 mb-3">Auslöser</h2>
+
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        Wenn
+                                    </div>
+                                </div>
+
+                                <button type="button" class="btn btn-secondary">Neuen Auslöser hinzufügen</button>
+
+                                <hr>
+
+                                <div class="d-grid">
+                                    <button type="button" class="btn btn-primary btn-lg" style="float: right">Speichern</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
