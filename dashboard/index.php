@@ -71,14 +71,20 @@
                                 <div class="card mb-3">
                                     <div class="trigger-card card-body">
                                         Wenn
-                                        <select class="form-select" aria-label="Default select example">
+                                        <select id="changeTrigger0" onchange="changeTrigger(0, 1);" class="form-select" aria-label="Auslöser auswählen">
                                             <option selected></option>
-                                            <option value="1">Uhrzeit</option>
-                                            <option value="2">Temperatur</option>
-                                            <option value="3">Luftfeuchtigkeit</option>
+                                            <option value="time">Uhrzeit</option>
+                                            <option value="temperature">Temperatur</option>
+                                            <option value="humidity">Luftfeuchtigkeit</option>
                                         </select>
 
-                                        <select class="form-select" aria-label="Default select example">
+                                        <div id="triggerSecondInput0"></div>
+
+                                        <div id="triggerThirdInput0"></div>
+
+                                        <div id="unit1_0"></div>
+
+                                        <!--<select class="form-select" aria-label="Auswählen, ob Aktion ausgeführt werden soll, wenn Wert kleiner, größer oder gleich angegebenem Wert.">
                                             <option selected></option>
                                             <option value="1">kleiner</option>
                                             <option value="2">größer</option>
@@ -87,7 +93,7 @@
 
                                         <input type="number" class="form-control" id="exampleInputPassword1;">
 
-                                        °C
+                                        °C-->
                                     </div>
                                 </div>
 
@@ -130,7 +136,8 @@
         </div>
     </div>
 
-    <script src="../files/dashboard.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../files/js/dashboard.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
