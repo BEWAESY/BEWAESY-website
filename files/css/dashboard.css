@@ -17,3 +17,11 @@
 .accordion {
     margin: 20px 20px 0 20px;
 }
+
+.trigger-card {
+    display: grid;
+    grid-template-columns: 41px 165px 100px 90px 16px;
+    grid-template-rows: 1fr;
+    grid-column-gap: 5px;
+    align-items: center;
+}
