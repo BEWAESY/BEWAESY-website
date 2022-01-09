@@ -69,31 +69,30 @@
                                 <h2 class="mt-3 mb-3">Auslöser</h2>
 
                                 <div class="card mb-3">
-                                    <div id="trigger0" class="trigger-card card-body">
-                                        Wenn
-                                        <select id="changeTrigger0" onchange="changeTrigger(0, 1);" class="form-select" aria-label="Auslöser auswählen">
-                                            <option selected></option>
-                                            <option value="time">Uhrzeit</option>
-                                            <option value="temperature">Temperatur</option>
-                                            <option value="humidity">Luftfeuchtigkeit</option>
-                                        </select>
+                                    <div class="card-body trigger-body">
+                                        <div id="trigger0" class="trigger-card">
+                                            <b>Wenn</b>
+                                            <select id="changeTrigger0" onchange="changeTrigger(0, 1);" class="form-select" aria-label="Auslöser auswählen">
+                                                <option selected></option>
+                                                <option value="time">Uhrzeit</option>
+                                                <option value="temperature">Temperatur</option>
+                                                <option value="humidity">Luftfeuchtigkeit</option>
+                                            </select>
 
-                                        <div id="triggerSecondInput0"></div>
+                                            <div id="triggerSecondInput0"></div>
 
-                                        <div id="triggerThirdInput0"></div>
+                                            <div id="triggerThirdInput0"></div>
 
-                                        <div id="unit1_0"></div>
+                                            <div id="unit1_0"></div>
+                                        </div>
 
-                                        <!--<select class="form-select" aria-label="Auswählen, ob Aktion ausgeführt werden soll, wenn Wert kleiner, größer oder gleich angegebenem Wert.">
-                                            <option selected></option>
-                                            <option value="1">kleiner</option>
-                                            <option value="2">größer</option>
-                                            <option value="3">gleich</option>
-                                        </select>
+                                        <b>dann:</b>
 
-                                        <input type="number" class="form-control" id="exampleInputPassword1;">
+                                        <div id="action0" class="trigger-action">
+                                            gieße für <input id="waterSeconds0" type="number" class="form-control" min="1"> Sekunden
+                                        </div>
 
-                                        °C-->
+                                        <button type="button" class="btn btn-outline-danger btn-sm">Entfernen</button>
                                     </div>
                                 </div>
 

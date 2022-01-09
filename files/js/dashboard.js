@@ -3,7 +3,7 @@
 const triggerBasicGrid = $(".trigger-card").css("grid-template-columns");
 
 // Time grid
-const timeGrid = triggerBasicGrid + " 100px";
+const timeGrid = triggerBasicGrid + " 100px 26px";
 
 // Temperature + humidity grid
 const triggerTemperature1_grid = triggerBasicGrid + " 117px";  // Add value for second select
@@ -26,13 +26,14 @@ function changeTrigger(triggerId, valuePlace) {
 
         // Check the value and then edit page accordingly
         if (inputValue == "time") {
-            // Chnage grid
+            // Change grid
             $(`#trigger${triggerId}`).css("grid-template-columns", timeGrid);
 
             // Insert new time select
             $(`#triggerSecondInput${triggerId}`).append(`
                 <input id="triggerSecondValue${triggerId}" type="time" class="form-control">
             `);
+            $(`#triggerThirdInput${triggerId}`).append("Uhr");
 
             // Focus on time input
             $(`#triggerSecondValue${triggerId}`).focus();
