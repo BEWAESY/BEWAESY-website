@@ -10,6 +10,7 @@ const triggerTemperature1_grid = triggerBasicGrid + " 117px";  // Add value for 
 const triggerTemparature2_normalGrid = triggerTemperature1_grid + " 90px 16px";  // Grid that is used if values "smaller" or "bigger" are chosen
 //const triggerTemperature2_specialGrid;  // Grid that is used if value "between" is chosen
 
+var newCounter = 0;
 
 
 function changeTrigger(triggerId, valuePlace) {
@@ -43,7 +44,7 @@ function changeTrigger(triggerId, valuePlace) {
 
             // Insert new select
             $(`#triggerSecondInput${triggerId}`).append(`
-                <select id="triggerSecondValue${triggerId}" onchange="changeTrigger(${triggerId}, 2);" class="form-select" aria-label="Auswählen, ob Aktion ausgeführt werden soll, wenn Wert kleiner, größer oder gleich angegebenem Wert.">
+                <select id="triggerSecondValue${triggerId}" onchange="changeTrigger('${triggerId}', 2);" class="form-select" aria-label="Auswählen, ob Aktion ausgeführt werden soll, wenn Wert kleiner, größer oder gleich angegebenem Wert.">
                     <option selected></option>
                     <option value="smaller">kleiner</option>
                     <option value="bigger">größer</option>
@@ -92,27 +93,16 @@ function changeTrigger(triggerId, valuePlace) {
 }
 
 
-function createTriggers(triggerData) {
-    // Get values
-    let id = triggerData["id"];
-    let systemid = triggerData["systemid"];
-    let eventTrigger = triggerData["eventTrigger"];
-    let triggerValue1 = triggerData["triggerValue1"];
-    let triggerValue2 = triggerData["triggerValue2"];
-    let triggerRange = triggerData["triggerRange"];
-    let seconds = triggerData["seconds"];
-
-
-    //alert(JSON.stringify(triggerData));
-
-    //alert(triggerData["eventTrigger"])
+function addTrigger(id, systemid) {
+    // Check if id exists, if not generate new one
+    if (id == "") id = `new${++newCounter}`;
 
     $(`#addTriggers${systemid}`).append(`
-        <div class="card mb-3">
+        <div id="triggerCard${id}" class="card mb-3">
             <div class="card-body trigger-body">
                 <div id="trigger${id}" class="trigger-card">
                     <b>Wenn</b>
-                    <select id="changeTrigger${id}" onchange="changeTrigger(${id}, 1);" class="form-select">
+                    <select id="changeTrigger${id}" onchange="changeTrigger('${id}', 1);" class="form-select">
                         <option></option>
                         <option value="time">Uhrzeit</option>
                         <option value="temperature">Temperatur</option>
@@ -129,14 +119,38 @@ function createTriggers(triggerData) {
                 <b>dann:</b>
 
                 <div id="action${id}" class="trigger-action">
-                    gieße für <input id="waterSeconds${id}" type="number" class="form-control" min="1" value="${seconds}"> Sekunden
+                    gieße für <input id="waterSeconds${id}" type="number" class="form-control" min="1"> Sekunden
                 </div>
 
-                <button type="button" class="btn btn-outline-danger btn-sm">Entfernen</button>
+                <button type="button" onclick="removeTrigger('${id}')" class="btn btn-outline-danger btn-sm">Entfernen</button>
             </div>
         </div>
     `);
+}
 
+
+function removeTrigger(id) {
+    $(`#triggerCard${id}`).remove();
+}
+
+
+
+function createTriggers(triggerData) {
+    // Get values
+    let id = triggerData["id"];
+    let systemid = triggerData["systemid"];
+    let eventTrigger = triggerData["eventTrigger"];
+    let triggerValue1 = triggerData["triggerValue1"];
+    let triggerValue2 = triggerData["triggerValue2"];
+    let triggerRange = triggerData["triggerRange"];
+    let seconds = triggerData["seconds"];
+
+    // Add new trigger
+    addTrigger(id, systemid);
+
+    // INSERT DATA
+    // Insert seconds
+    $(`#waterSeconds${id}`).val(seconds);
 
     // Choose right select
     $(`#changeTrigger${id}`).val(eventTrigger);
@@ -151,6 +165,6 @@ function createTriggers(triggerData) {
     if (eventTrigger == "temperature" || eventTrigger == "humidity") {
         $(`#triggerSecondValue${id}`).val(triggerRange);
         changeTrigger(id, 2);
-        $(`#triggerThirdValue${id}`).val(triggerValue1);
+        $(`#triggerThirdValue${id}`).val(triggerValue1).blur();
     }
 }

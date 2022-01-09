@@ -100,7 +100,7 @@
                                                 <!-- Triggers are added by JS -->
                                             </div>
 
-                                            <button type="button" class="btn btn-secondary">Neuen Auslöser hinzufügen</button>
+                                            <button type="button" onclick="addTrigger('', $id);" class="btn btn-secondary">Neuen Auslöser hinzufügen</button>
             
                                             <hr>
             
