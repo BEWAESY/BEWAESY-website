@@ -13,6 +13,23 @@ const triggerTemparature2_normalGrid = triggerTemperature1_grid + " 90px 16px"; 
 var newCounter = 0;
 
 
+
+// Save changed system settings
+$(document).ready(function() {
+    $("form").submit(function() {
+        let systemid = $(this).attr("id");
+
+        alert(systemid);
+
+        let data = $(this).serialize();
+
+        alert(data);
+        alert($(this).attr("id"));
+    });
+});
+
+
+
 function changeTrigger(triggerId, valuePlace) {
     // Check what value was changed
     if (valuePlace == 1) {

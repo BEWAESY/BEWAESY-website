@@ -45,7 +45,7 @@
 
         <div class="main">
             <div class="accordion" id="accordionPanelsStayOpenExample">
-                <!-- Insert triggers with PHP -->
+                <!-- Insert Systems with PHP -->
                 <?php
                     foreach ($systems as $systemKey => $singleSystem) {
                         //print_r($singleSystem);
@@ -77,7 +77,7 @@
             
                                         <hr class="mt-4">
             
-                                        <form>
+                                        <form id="form$id">
                                             <h2 class="mb-3">Einstellungen</h2>
             
                                             <label for="cooldown" class="form-label">Cooldown (in Sekunden)</label>
@@ -105,7 +105,7 @@
                                             <hr>
             
                                             <div class="d-grid">
-                                                <button type="button" class="btn btn-primary btn-lg" style="float: right">Speichern</button>
+                                                <input type="submit" value="Speichern" class="btn btn-primary btn-lg" style="float: right">
                                             </div>
                                         </form>
                                     </div>
