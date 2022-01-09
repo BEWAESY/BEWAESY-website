@@ -69,7 +69,7 @@
                                 <h2 class="mt-3 mb-3">Auslöser</h2>
 
                                 <div class="card mb-3">
-                                    <div class="trigger-card card-body">
+                                    <div id="trigger0" class="trigger-card card-body">
                                         Wenn
                                         <select id="changeTrigger0" onchange="changeTrigger(0, 1);" class="form-select" aria-label="Auslöser auswählen">
                                             <option selected></option>

@@ -20,7 +20,8 @@
 
 .trigger-card {
     display: grid;
-    grid-template-columns: 41px 165px 117px 90px 16px;
+    /*grid-template-columns: 41px 165px 117px 90px 16px;*/
+    grid-template-columns: 41px 165px;
     grid-template-rows: 1fr;
     grid-column-gap: 5px;
     align-items: center;
