@@ -1,6 +1,6 @@
 // Define basic values
 // Define grids for triggers
-const triggerBasicGrid = $(".trigger-card").css("grid-template-columns");
+const triggerBasicGrid = "45px 165px";
 
 // Time grid
 const timeGrid = triggerBasicGrid + " 100px 26px";
@@ -88,5 +88,69 @@ function changeTrigger(triggerId, valuePlace) {
         } else if (inputValue == "between") {
             // TODO
         }
+    }
+}
+
+
+function createTriggers(triggerData) {
+    // Get values
+    let id = triggerData["id"];
+    let systemid = triggerData["systemid"];
+    let eventTrigger = triggerData["eventTrigger"];
+    let triggerValue1 = triggerData["triggerValue1"];
+    let triggerValue2 = triggerData["triggerValue2"];
+    let triggerRange = triggerData["triggerRange"];
+    let seconds = triggerData["seconds"];
+
+
+    //alert(JSON.stringify(triggerData));
+
+    //alert(triggerData["eventTrigger"])
+
+    $(`#addTriggers${systemid}`).append(`
+        <div class="card mb-3">
+            <div class="card-body trigger-body">
+                <div id="trigger${id}" class="trigger-card">
+                    <b>Wenn</b>
+                    <select id="changeTrigger${id}" onchange="changeTrigger(${id}, 1);" class="form-select">
+                        <option></option>
+                        <option value="time">Uhrzeit</option>
+                        <option value="temperature">Temperatur</option>
+                        <option value="humidity">Luftfeuchtigkeit</option>
+                    </select>
+
+                    <div id="triggerSecondInput${id}"></div>
+
+                    <div id="triggerThirdInput${id}"></div>
+
+                    <div id="unit1_${id}"></div>
+                </div>
+
+                <b>dann:</b>
+
+                <div id="action${id}" class="trigger-action">
+                    gieße für <input id="waterSeconds${id}" type="number" class="form-control" min="1" value="${seconds}"> Sekunden
+                </div>
+
+                <button type="button" class="btn btn-outline-danger btn-sm">Entfernen</button>
+            </div>
+        </div>
+    `);
+
+
+    // Choose right select
+    $(`#changeTrigger${id}`).val(eventTrigger);
+    changeTrigger(id, 1);  // Execute function to change trigger
+
+    // If time, insert right time
+    if (eventTrigger == "time") {
+        $(`#triggerSecondValue${id}`).val(triggerValue1).blur();
+    }
+
+    // If temperature or humidity, insert right values
+    if (eventTrigger == "temperature" || eventTrigger == "humidity") {
+        $(`#triggerSecondValue${id}`).val(triggerRange);
+        changeTrigger(id, 2);
+        $(`#triggerThirdValue${id}`).val(triggerValue1);
     }
 }
