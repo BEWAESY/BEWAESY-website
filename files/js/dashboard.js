@@ -3,6 +3,7 @@
 const triggerBasicGrid = $(".trigger-card").css("grid-template-columns");
 
 // Time grid
+const timeGrid = triggerBasicGrid + " 100px";
 
 // Temperature + humidity grid
 const triggerTemperature1_grid = triggerBasicGrid + " 117px";  // Add value for second select
@@ -16,14 +17,25 @@ function changeTrigger(triggerId, valuePlace) {
     if (valuePlace == 1) {
         let inputValue = $(`#changeTrigger${triggerId}`).val();  // Get value from input
 
+
         // Remove older styles
         $(`#triggerSecondInput${triggerId}`).empty();
         $(`#triggerThirdInput${triggerId}`).empty();
         $(`#unit1_${triggerId}`).empty();
 
+
         // Check the value and then edit page accordingly
         if (inputValue == "time") {
-            // TODO
+            // Chnage grid
+            $(`#trigger${triggerId}`).css("grid-template-columns", timeGrid);
+
+            // Insert new time select
+            $(`#triggerSecondInput${triggerId}`).append(`
+                <input id="triggerSecondValue${triggerId}" type="time" class="form-control">
+            `);
+
+            // Focus on time input
+            $(`#triggerSecondValue${triggerId}`).focus();
         } else if (inputValue == "temperature" || inputValue == "humidity") {
             // Change grid to fit content
             $(`#trigger${triggerId}`).css("grid-template-columns", triggerTemperature1_grid);
