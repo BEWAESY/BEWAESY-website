@@ -20,9 +20,6 @@ $(document).ready(function() {
     $("form").submit(function() {
         let systemid = $(this).attr("id");
 
-        //alert(systemid);
-
-
         // Get cooldown and max Seconds
         let cooldown = $(`#cooldown${systemid}`).val();
         let maxSeconds = $(`#maxSeconds${systemid}`).val();
@@ -36,12 +33,11 @@ $(document).ready(function() {
         };
         sendData.push(systemData);
 
-        //alert(JSON.stringify(sendData))
-
         // Get triggers
         sendData[1] = [];
         for (id of triggerIds[systemid]) {
             // Get type of trigger
+            let newTrigger = $(`#triggerCard${id}`).attr("data-new-trigger");
             let eventTrigger = $(`#changeTrigger${id}`).val();
             let triggerValue1;
             let triggerValue2;
@@ -55,8 +51,7 @@ $(document).ready(function() {
             } else if (eventTrigger == "temperature" || eventTrigger == "humidity") {
                 triggerRange = $(`#triggerSecondValue${id}`).val();
                 triggerValue1 = $(`#triggerThirdValue${id}`).val();
-            }
-            
+            }            
 
 
             let triggerData = {
@@ -65,7 +60,8 @@ $(document).ready(function() {
                 "triggerValue1": triggerValue1,
                 "triggerValue2": triggerValue2,
                 "triggerRange" : triggerRange,
-                "seconds"      : seconds
+                "seconds"      : seconds,
+                "newTrigger"   : newTrigger
             }
             sendData[1].push(triggerData);
         }
@@ -74,15 +70,11 @@ $(document).ready(function() {
         $.ajax({
             url: "../files/ajax/saveSystem.php",
             type: 'post',
-            //data: {dbId: event.data.dbId, name: name, duration: duration, cooldown: cooldown, triggerRows: triggerRows},
             data: {"0": JSON.stringify(sendData)},
-            //contentType: "application/json",
             success: function(response) {
-                alert(response);
+                location.reload();
             }
         });
-
-        //alert(JSON.stringify(sendData));
 
         return false;
     });
@@ -171,14 +163,19 @@ function changeTrigger(triggerId, valuePlace) {
 
 
 function addTrigger(id, systemid) {
+    let newTrigger = false;
+
     // Check if id exists, if not generate new one
-    if (id == "") id = `new${++newCounter}`;
+    if (id == "") {
+        id = `new${++newCounter}`;
+        newTrigger = true;
+    }
 
     // Insert trigger into trigger array
     triggerIds[systemid].push(id);
 
     $(`#addTriggers${systemid}`).append(`
-        <div id="triggerCard${id}" class="card mb-3">
+        <div id="triggerCard${id}" class="card mb-3" data-new-trigger="${newTrigger}">
             <div class="card-body trigger-body">
                 <div id="trigger${id}" class="trigger-card">
                     <b>Wenn</b>
