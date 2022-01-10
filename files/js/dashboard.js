@@ -82,7 +82,7 @@ $(document).ready(function() {
             }
         });
 
-        alert(JSON.stringify(sendData));
+        //alert(JSON.stringify(sendData));
 
         return false;
     });
