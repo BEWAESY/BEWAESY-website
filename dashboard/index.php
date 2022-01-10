@@ -77,17 +77,17 @@
             
                                         <hr class="mt-4">
             
-                                        <form id="form$id">
+                                        <form id="$id">
                                             <h2 class="mb-3">Einstellungen</h2>
             
                                             <label for="cooldown" class="form-label">Cooldown (in Sekunden)</label>
-                                            <input type="number" id="cooldown" class="form-control" aria-describedby="cooldownHelpBlock" value="$cooldown" min="0">
+                                            <input type="number" id="cooldown$id" class="form-control" aria-describedby="cooldownHelpBlock" value="$cooldown" min="0">
                                             <div id="passwordHelpBlock" class="form-text">
                                                 0 eintragen für keinen Cooldown
                                             </div>
             
                                             <label for="maxSeconds" class="form-label mt-3">Max. Sekunden / Tag</label>
-                                            <input type="number" id="maxSeconds" class="form-control" aria-describedby="maxSecondsHelpBlock" value="$maxSeconds" min="0">
+                                            <input type="number" id="maxSeconds$id" class="form-control" aria-describedby="maxSecondsHelpBlock" value="$maxSeconds" min="0">
                                             <div id="maxSecondsHelpBlock" class="form-text">
                                                 0 eintragen für kein Maximum
                                             </div>
@@ -210,12 +210,18 @@
         <?php
             // Call function to create triggers
             foreach ($systems as $systemKey => $singleSystem) {
+                $systemId = $singleSystem["id"];
+
+                echo("// System $systemId\n");
+                echo("triggerIds[$systemId] = [];\n\n");
+
+                echo("// Triggers\n");
                 foreach ($systemTriggers[$systemKey] as $triggerKey => $trigger) {
                     $data = json_encode($trigger);
-                    $systemId = $singleSystem["id"];
 
-                    echo("createTriggers($data, $systemId); \n");
+                    echo("create_db_triggers($data, $systemId);\n");
                 }
+                echo("\n\n");
             }
         ?>
     </script>

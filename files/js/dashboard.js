@@ -11,6 +11,7 @@ const triggerTemparature2_normalGrid = triggerTemperature1_grid + " 90px 16px"; 
 //const triggerTemperature2_specialGrid;  // Grid that is used if value "between" is chosen
 
 var newCounter = 0;
+var triggerIds = [];
 
 
 
@@ -19,12 +20,71 @@ $(document).ready(function() {
     $("form").submit(function() {
         let systemid = $(this).attr("id");
 
-        alert(systemid);
+        //alert(systemid);
 
-        let data = $(this).serialize();
 
-        alert(data);
-        alert($(this).attr("id"));
+        // Get cooldown and max Seconds
+        let cooldown = $(`#cooldown${systemid}`).val();
+        let maxSeconds = $(`#maxSeconds${systemid}`).val();
+
+        // organize data
+        let sendData = [];
+        let systemData = {
+            "id": systemid,
+            "cooldown": cooldown,
+            "maxSeconds": maxSeconds
+        };
+        sendData.push(systemData);
+
+        //alert(JSON.stringify(sendData))
+
+        // Get triggers
+        sendData[1] = [];
+        for (id of triggerIds[systemid]) {
+            // Get type of trigger
+            let eventTrigger = $(`#changeTrigger${id}`).val();
+            let triggerValue1;
+            let triggerValue2;
+            let triggerRange;
+            let seconds = $(`#waterSeconds${id}`).val();
+
+
+            // Find out type of trigger and get data accordingly
+            if (eventTrigger == "time") {
+                triggerValue1 = $(`#triggerSecondValue${id}`).val();
+            } else if (eventTrigger == "temperature" || eventTrigger == "humidity") {
+                triggerRange = $(`#triggerSecondValue${id}`).val();
+                triggerValue1 = $(`#triggerThirdValue${id}`).val();
+            }
+            
+
+
+            let triggerData = {
+                "id"           : id,
+                "eventTrigger" : eventTrigger,
+                "triggerValue1": triggerValue1,
+                "triggerValue2": triggerValue2,
+                "triggerRange" : triggerRange,
+                "seconds"      : seconds
+            }
+            sendData[1].push(triggerData);
+        }
+
+        // Send data to PHP script
+        $.ajax({
+            url: "../files/ajax/saveSystem.php",
+            type: 'post',
+            //data: {dbId: event.data.dbId, name: name, duration: duration, cooldown: cooldown, triggerRows: triggerRows},
+            data: {"0": JSON.stringify(sendData)},
+            //contentType: "application/json",
+            success: function(response) {
+                alert(response);
+            }
+        });
+
+        alert(JSON.stringify(sendData));
+
+        return false;
     });
 });
 
@@ -49,7 +109,7 @@ function changeTrigger(triggerId, valuePlace) {
 
             // Insert new time select
             $(`#triggerSecondInput${triggerId}`).append(`
-                <input id="triggerSecondValue${triggerId}" type="time" class="form-control">
+                <input id="triggerSecondValue${triggerId}" type="time" class="form-control" required>
             `);
             $(`#triggerThirdInput${triggerId}`).append("Uhr");
 
@@ -61,7 +121,7 @@ function changeTrigger(triggerId, valuePlace) {
 
             // Insert new select
             $(`#triggerSecondInput${triggerId}`).append(`
-                <select id="triggerSecondValue${triggerId}" onchange="changeTrigger('${triggerId}', 2);" class="form-select" aria-label="Auswählen, ob Aktion ausgeführt werden soll, wenn Wert kleiner, größer oder gleich angegebenem Wert.">
+                <select id="triggerSecondValue${triggerId}" onchange="changeTrigger('${triggerId}', 2);" class="form-select" required>
                     <option selected></option>
                     <option value="smaller">kleiner</option>
                     <option value="bigger">größer</option>
@@ -99,7 +159,7 @@ function changeTrigger(triggerId, valuePlace) {
 
             // Append input box
             $(`#triggerThirdInput${triggerId}`).append(`
-                <input id="triggerThirdValue${triggerId}" type="number" class="form-control" min="${minValue}" max="${maxValue}">
+                <input id="triggerThirdValue${triggerId}" type="number" class="form-control" min="${minValue}" max="${maxValue}" required>
             `);
             $(`#unit1_${triggerId}`).append(unit)
             $(`#triggerThirdValue${triggerId}`).focus();
@@ -114,12 +174,15 @@ function addTrigger(id, systemid) {
     // Check if id exists, if not generate new one
     if (id == "") id = `new${++newCounter}`;
 
+    // Insert trigger into trigger array
+    triggerIds[systemid].push(id);
+
     $(`#addTriggers${systemid}`).append(`
         <div id="triggerCard${id}" class="card mb-3">
             <div class="card-body trigger-body">
                 <div id="trigger${id}" class="trigger-card">
                     <b>Wenn</b>
-                    <select id="changeTrigger${id}" onchange="changeTrigger('${id}', 1);" class="form-select">
+                    <select id="changeTrigger${id}" onchange="changeTrigger('${id}', 1);" class="form-select" required>
                         <option></option>
                         <option value="time">Uhrzeit</option>
                         <option value="temperature">Temperatur</option>
@@ -136,23 +199,26 @@ function addTrigger(id, systemid) {
                 <b>dann:</b>
 
                 <div id="action${id}" class="trigger-action">
-                    gieße für <input id="waterSeconds${id}" type="number" class="form-control" min="1"> Sekunden
+                    gieße für <input id="waterSeconds${id}" type="number" class="form-control" min="1" required> Sekunden
                 </div>
 
-                <button type="button" onclick="removeTrigger('${id}')" class="btn btn-outline-danger btn-sm">Entfernen</button>
+                <button type="button" onclick="removeTrigger('${id}', '${systemid}')" class="btn btn-outline-danger btn-sm">Entfernen</button>
             </div>
         </div>
     `);
 }
 
 
-function removeTrigger(id) {
+function removeTrigger(id, systemid) {
     $(`#triggerCard${id}`).remove();
+
+    // Remove trigger from id
+    triggerIds[systemid].splice($.inArray(id, triggerIds[systemid]), 1);
 }
 
 
 
-function createTriggers(triggerData) {
+function create_db_triggers(triggerData) {
     // Get values
     let id = triggerData["id"];
     let systemid = triggerData["systemid"];
