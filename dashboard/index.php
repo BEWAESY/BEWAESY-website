@@ -39,17 +39,14 @@
 <body>
     <?php include "../files/php/templates/nav.php" ?>
 
-    <!--<div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">-->
     <div class="dashboard-container">
         <?php include "../files/php/templates/dashboard-nav.php"; ?>
 
         <div class="main">
-            <div class="accordion" id="accordionPanelsStayOpenExample">
+            <div class="accordion" id="accordionSystems">
                 <!-- Insert Systems with PHP -->
                 <?php
                     foreach ($systems as $systemKey => $singleSystem) {
-                        //print_r($singleSystem);
-
                         // Get needed values
                         $id = $singleSystem["id"];
                         $name = htmlspecialchars($singleSystem["name"]);
@@ -58,12 +55,12 @@
 
                         echo <<<END
                             <div class="accordion-item">
-                                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                <h2 class="accordion-header" id="systems-heading$id">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#systems-collapse$id" aria-expanded="true" aria-controls="systems-collapse$id">
                                     $name
                                 </button>
                                 </h2>
-                                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
+                                <div id="systems-collapse$id" class="accordion-collapse collapse" aria-labelledby="systems-heading$id" data-bs-parent="#accordionSystems">
                                     <div class="accordion-body">
                                         <div id="automatic">
                                             <h2 class="mb-3">Automatikmodus</h2>
