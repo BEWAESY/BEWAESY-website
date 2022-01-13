@@ -1,4 +1,5 @@
 <?php include "../files/php/config/config.php" ?>
+<?php include "../files/php/config/sql.php" ?>
 
 <?php
     session_start();
@@ -10,6 +11,24 @@
     }
 
     $page = "statistics";
+?>
+
+<?php
+    // Get data
+    // Get system data
+    $statement = $pdo->prepare("SELECT id, name FROM systems WHERE userid = :userid");
+    $result = $statement->execute(array("userid" => $_SESSION["userid"]));
+    $systems = $statement->fetchAll();
+
+    // Get the logs for the systems from the last 7 days
+    foreach ($systems as $systemKey => $singleSystem) {
+        $statement = $pdo->prepare("SELECT seconds, timestamp FROM systemlog WHERE systemid = :systemid AND timestamp >= DATE(NOW()) - INTERVAL 14 DAY");
+        $result = $statement->execute(array("systemid" => $singleSystem["id"]));
+        $systemLogs = $statement->fetchAll();
+
+        // Append systemLogs to Systems
+        $systems[$systemKey]["logs"] = $systemLogs;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -36,53 +55,68 @@
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="gießzeiten-tab" data-bs-toggle="tab" data-bs-target="#gießzeiten" type="button" role="tab" aria-controls="gießzeiten" aria-selected="true">Gießzeiten</button>
+                            <button class="nav-link disabled" id="gießzeiten-tab" data-bs-toggle="tab" data-bs-target="#gießzeiten" type="button" role="tab" aria-controls="gießzeiten" aria-selected="true">Gießzeiten</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="ereignisse-tab" data-bs-toggle="tab" data-bs-target="#ereignisse" type="button" role="tab" aria-controls="ereignisse" aria-selected="false">Letzte Ereignisse</button>
+                            <button class="nav-link active" id="ereignisse-tab" data-bs-toggle="tab" data-bs-target="#ereignisse" type="button" role="tab" aria-controls="ereignisse" aria-selected="false">Letzte Ereignisse</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="sensordaten-tab" data-bs-toggle="tab" data-bs-target="#sensordaten" type="button" role="tab" aria-controls="sonsordaten" aria-selected="false">Sensordaten der Pflanze</button>
+                            <button class="nav-link disabled" id="sensordaten-tab" data-bs-toggle="tab" data-bs-target="#sensordaten" type="button" role="tab" aria-controls="sonsordaten" aria-selected="false">Sensordaten der Pflanze</button>
                         </li>
                     </ul>
                 </div>
                 <div class="card-body">
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="gießzeiten" role="tabpanel" aria-labelledby="gießzeiten-tab">
+                        <div class="tab-pane fade" id="gießzeiten" role="tabpanel" aria-labelledby="gießzeiten-tab">
                             <!-- Gießzeiten -->
                             <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
                         </div>
 
-                        <div class="tab-pane fade" id="ereignisse" role="tabpanel" aria-labelledby="ereignisse-tab">
-                            <!-- Letzte Ereignisse -->
-                            <div class="table-responsive">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                        <th scope="col" style="width: 33.333%;">Bewässerungssystem</th>
-                                        <th scope="col" style="width: 33.333%;">Gießzeit (in s)</th>                                    
-                                        <th scope="col">Timestamp</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>System 1</td>
-                                            <td>10s</td>
-                                            <td>2021-12-31 10:37:03</td>
-                                        </tr>
-                                        <tr>
-                                            <td>System 1</td>
-                                            <td>5s</td>
-                                            <td>2021-12-31 10:33:04</td>
-                                        </tr>
-                                        <tr>
-                                            <td>System 2</td>
-                                            <td>20s</td>
-                                            <td>2021-12-31 10:32:04</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                        <div class="tab-pane fade show active" id="ereignisse" role="tabpanel" aria-labelledby="ereignisse-tab">
+                            <p style="text-align: left">Gießzeiten der letzten 14 Tage</p>
+
+                            <?php
+                                foreach ($systems as $systemKey => $singleSystem) {
+                                    // Get needed values
+                                    $systemName = htmlspecialchars($singleSystem["name"]);
+                                    
+
+                                    echo <<<END
+                                        <h2 class="mt-3 mb-3" style="text-align: left">$systemName</h2>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Timestamp</th>
+                                                        <th scope="col" style="width: 50%;">Gießzeit (in s)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                    END;
+
+                                    // Insert data into empty table
+                                    foreach ($singleSystem["logs"] as $singleSystemLog) {
+                                        // Get needed values
+                                        $logTimestamp = $singleSystemLog["timestamp"];
+                                        $logDuration = $singleSystemLog["seconds"];
+
+
+                                        echo <<<END
+                                                    <tr>
+                                                        <td>$logTimestamp</td>
+                                                        <td>$logDuration</td>
+                                                    </tr>
+                                        END;
+                                    }
+
+                                    // Insert bottom of table
+                                    echo <<<END
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    END;
+                                }
+                            ?>
                         </div>
 
                         <div class="tab-pane fade" id="sensordaten" role="tabpanel" aria-labelledby="sensordaten-tab">
