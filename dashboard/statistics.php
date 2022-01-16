@@ -37,6 +37,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BEWÄSY</title>
+    <link rel="icon" type="image/x-icon" href="../files/images/logo.svg">
 
     <link href="../files/addons/bootstrap.min.css" rel="stylesheet">
     <link href="../files/css/dashboard.css" rel="stylesheet">
