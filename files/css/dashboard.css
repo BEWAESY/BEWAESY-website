@@ -21,7 +21,7 @@
 
 .trigger-body {
     display: grid;
-    grid-template-columns: calc((100% - 120px) / 2) 43px calc((100% - 120px) / 2) 77px;
+    grid-template-columns: calc((100% - 120px) / 2) 43px calc((100% - 120px) / 2) 78px;
     align-items: center;
 }
 

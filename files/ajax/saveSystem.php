@@ -18,7 +18,7 @@
     $maxSeconds = htmlspecialchars(@$systemData["maxSeconds"]);
 
     // Check if all system data exists
-    if (empty($systemid) || empty($cooldown) || empty($maxSeconds)) die("missingData");
+    if (empty($systemid) || $cooldown == "" || $maxSeconds == "") die("missingData");
 
     // Check if system exists in DB and user has privileges to write to it
     $statement = $pdo->prepare("SELECT * FROM systems WHERE id = :id");

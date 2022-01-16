@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <div class="justify-content-start">
             <a class="navbar-brand" href="<?php echo($filePath); ?>">
-                <img src="<?php echo($filePath); ?>files/images/bootstrap-logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
+                <img src="<?php echo($filePath); ?>files/images/logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
                 BEWÄSY
             </a>
         </div>
@@ -17,7 +17,7 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                         <li><a class="dropdown-item" href="'.$filePath.'dashboard">Dashboard</a></li>
-                        <li><a class="dropdown-item" href="#">Einstellungen</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="alert(\'Coming Soon\');">Einstellungen</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="'.$filePath.'logout">Logout</a></li>
                     </ul>

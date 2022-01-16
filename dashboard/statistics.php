@@ -1,8 +1,8 @@
-<?php include "../files/php/config/config.php" ?>
-<?php include "../files/php/config/sql.php" ?>
-
 <?php
     session_start();
+
+    include "../files/php/config/config.php";
+    include "../files/php/config/sql.php";
 
     // Check if user is logged in, if not, redirect to login
     if (!isset($_SESSION["userid"])) {
@@ -11,9 +11,8 @@
     }
 
     $page = "statistics";
-?>
 
-<?php
+    
     // Get data
     // Get system data
     $statement = $pdo->prepare("SELECT id, name FROM systems WHERE userid = :userid");

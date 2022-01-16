@@ -57,7 +57,7 @@
 
         <div class="login-container">
             <div class="login-goback" onclick="location.href='..';">
-                <img src="../files/images/bootstrap-logo.svg" class="login-logo">
+                <img src="../files/images/logo.svg" class="login-logo">
             </div>
 
             <h1 style="font-size: 25px;">Login <b>BEWÄSY</b></h1>

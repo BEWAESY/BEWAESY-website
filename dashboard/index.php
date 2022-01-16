@@ -1,8 +1,7 @@
-<?php include "../files/php/config/config.php" ?>
-<?php include "../files/php/config/sql.php" ?>
-
 <?php
     session_start();
+    include "../files/php/config/config.php";
+    include "../files/php/config/sql.php";
 
     // Check if user is logged in, if not, redirect to login
     if (!isset($_SESSION["userid"])) {
@@ -63,12 +62,12 @@
                                 <div id="systems-collapse$id" class="accordion-collapse collapse" aria-labelledby="systems-heading$id" data-bs-parent="#accordionSystems">
                                     <div class="accordion-body">
                                         <div id="automatic">
-                                            <h2 class="mb-3">Automatikmodus</h2>
+                                            <h2 class="mb-3">Automatikmodus (Comming Soon)</h2>
                                             <select id="selectPlant$id" class="form-select" aria-label="Default select example">
                                                 <option selected>Werte manuell eingeben</option>
-                                                <option value="1">Pflanzenart 1</option>
-                                                <option value="2">Pflanzenart 2</option>
-                                                <option value="3">Pflanzenart 3</option>
+                                                <option value="1" disabled>Pflanzenart 1</option>
+                                                <option value="2" disabled>Pflanzenart 2</option>
+                                                <option value="3" disabled>Pflanzenart 3</option>
                                             </select>
                                         </div>
             
