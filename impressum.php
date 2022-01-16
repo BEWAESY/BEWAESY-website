@@ -23,10 +23,13 @@
         73434 Aalen</p>
 
         <h2>Kontakt</h2>
-        <p>Telefon: +49 (0) 157 73 15 61 35<br />
+        <p>Telefon: +49 (0)15773156135<br />
         E-Mail: johannes.kuerz@gmx.de</p>
 
         <p>Quelle: <a href="https://www.e-recht24.de/impressum-generator.html">https://www.e-recht24.de/impressum-generator.html</a></p>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <?php include "files/php/templates/footer.php" ?>
 </body>
 </html>
