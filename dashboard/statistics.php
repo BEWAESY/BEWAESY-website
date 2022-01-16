@@ -97,13 +97,14 @@
                                     // Insert data into empty table
                                     foreach ($singleSystem["logs"] as $singleSystemLog) {
                                         // Get needed values
-                                        $logTimestamp = $singleSystemLog["timestamp"];
+                                        $logTimestamp = strtotime($singleSystemLog["timestamp"]." UTC");
+                                        $logInLocalTime = date("d.m.Y H:i:s", $logTimestamp);
                                         $logDuration = $singleSystemLog["seconds"];
 
 
                                         echo <<<END
                                                     <tr>
-                                                        <td>$logTimestamp</td>
+                                                        <td>$logInLocalTime</td>
                                                         <td>$logDuration</td>
                                                     </tr>
                                         END;
