@@ -36,12 +36,16 @@
 
                     <form>
                         <div class="mb-3">
-                            <label for="nameInput" class="form-label">Name:</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="nameHelp" required>
+                            <label for="nameInput" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="nameInput" aria-describedby="nameHelp" required>
                             <div id="nameHelp" class="form-text">Der Name deines neuen Bewässerungssystems</div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary">Absenden</button>
+                        <button id="formSubmit" type="submit" class="btn btn-primary">Absenden</button>
+
+                        <div id="response">
+                            <!-- This is inserted by JS after form submission -->
+                        </div>
                     </form>
                 </div>
             </div>
@@ -51,5 +55,7 @@
 
     <script src="../files/addons/jquery-3.6.0.min.js"></script>
     <script src="../files/addons/bootstrap.bundle.min.js"></script>
+
+    <script src="../files/js/add-system.js"></script>
 </body>
 </html>
