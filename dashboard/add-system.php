@@ -32,7 +32,17 @@
         <div class="main">
             <div class="card" style="margin: 20px">
                 <div class="card-body">
-                    <h1>Ein neues Bewässerungssystem hinzufügen</h1>
+                    <h1 class="mb-3">Ein neues Bewässerungssystem hinzufügen</h1>
+
+                    <form>
+                        <div class="mb-3">
+                            <label for="nameInput" class="form-label">Name:</label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="nameHelp" required>
+                            <div id="nameHelp" class="form-text">Der Name deines neuen Bewässerungssystems</div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Absenden</button>
+                    </form>
                 </div>
             </div>
         </div>
