@@ -27,7 +27,6 @@ function generateResponse(rawResponse) {
 
     // Get needed values
     let id = response[0];
-    let name = response[1];
     let apiKey = response[2];
 
     // Display feedback to user
@@ -45,7 +44,6 @@ function generateResponse(rawResponse) {
             <p class="mt-2">Dein Bewässerungssystem wurde erfolgreich hinzugefügt. Bitte füge die folgenden Daten auf deinem Bewässerungssystem hinzu, damit es mit unserer API kommunizieren kann. Wie das geht kannst du <a href="../help/add-system">hier</a> einsehen:</p>
             <hr>
             <p class="mb-0">ID: ${id}</p>
-            <p class="mb-0">Name: ${name}</p>
             <p>API-Key: ${apiKey}</p>
         </div>
     `);
