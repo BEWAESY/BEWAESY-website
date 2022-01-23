@@ -8,6 +8,12 @@ function addLog(timestamp, seconds, systemid) {
 }
 
 
+function loadAdditionalLogData(systemid) {
+    // Disable button and add loading animation
+    $(`#moreDataButton${systemid}`).prop("disabled", true).prepend('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ');
+}
+
+
 
 
 
