@@ -19,9 +19,9 @@
     $result = $statement->execute(array("userid" => $_SESSION["userid"]));
     $systems = $statement->fetchAll();
 
-    // Get the logs for the systems from the last 7 days
+    // Get the logs for the systems from the last 14 days
     foreach ($systems as $systemKey => $singleSystem) {
-        $statement = $pdo->prepare("SELECT seconds, timestamp FROM systemlog WHERE systemid = :systemid AND timestamp >= DATE(NOW()) - INTERVAL 14 DAY");
+        $statement = $pdo->prepare("SELECT seconds, timestamp FROM systemlog WHERE systemid = :systemid AND timestamp >= DATE(NOW()) - INTERVAL 14 DAY ORDER BY timestamp desc");
         $result = $statement->execute(array("systemid" => $singleSystem["id"]));
         $systemLogs = $statement->fetchAll();
 
@@ -46,7 +46,6 @@
 <body>
     <?php include "../files/php/templates/nav.php" ?>
 
-    <!--<div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px;">-->
     <div class="dashboard-container">
         <?php include "../files/php/templates/dashboard-nav.php"; ?>
 
@@ -73,11 +72,17 @@
                         </div>
 
                         <div class="tab-pane fade show active" id="ereignisse" role="tabpanel" aria-labelledby="ereignisse-tab">
-                            <p style="text-align: left">Gießzeiten der letzten 14 Tage</p>
+                            <div class="alert alert-primary d-flex align-items-center" role="alert" style="text-align: left">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                                </svg>
+                                Es werden die Gießzeiten der letzten 14 Tage angezeigt
+                            </div>
 
                             <?php
                                 foreach ($systems as $systemKey => $singleSystem) {
                                     // Get needed values
+                                    $systemId = $singleSystem["id"];
                                     $systemName = htmlspecialchars($singleSystem["name"]);
                                     
 
@@ -91,27 +96,8 @@
                                                         <th scope="col" style="width: 50%;">Gießzeit (in s)</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                    END;
+                                                <tbody id="tbody$systemId">
 
-                                    // Insert data into empty table
-                                    foreach ($singleSystem["logs"] as $singleSystemLog) {
-                                        // Get needed values
-                                        $logTimestamp = strtotime($singleSystemLog["timestamp"]." UTC");
-                                        $logInLocalTime = date("d.m.Y H:i:s", $logTimestamp);
-                                        $logDuration = $singleSystemLog["seconds"];
-
-
-                                        echo <<<END
-                                                    <tr>
-                                                        <td>$logInLocalTime</td>
-                                                        <td>$logDuration</td>
-                                                    </tr>
-                                        END;
-                                    }
-
-                                    // Insert bottom of table
-                                    echo <<<END
                                                 </tbody>
                                             </table>
                                         </div>
@@ -131,7 +117,37 @@
     </div>
 
     <script src="../files/addons/bootstrap.bundle.min.js"></script>
-    <script src="../files/Chart.min.js"></script>
+    <script src="../files/addons/jquery-3.6.0.min.js"></script>
+    <script src="../files/addons/Chart.min.js"></script>
     <script src="../files/js/statistics.js"></script>
+
+    <script>
+        <?php
+            //echo("var initialData = [$logData]")
+
+            // Call function to create systems
+            foreach ($systems as $systemKey => $singleSystem) {
+                $systemId = $singleSystem["id"];
+
+                echo("// System $systemId\n\n");
+
+                echo("// Logs\n");
+                foreach ($singleSystem["logs"] as $singleSystemLog) {
+                    $data = json_encode($singleSystemLog);
+
+                    // Get data
+                    $seconds = $singleSystemLog["seconds"];
+
+                    $logTimestamp = strtotime($singleSystemLog["timestamp"]." UTC");
+                    $logInLocalTime = json_encode(date("d.m.Y H:i:s", $logTimestamp));
+
+                    echo("addLog($logInLocalTime, $seconds, $systemId);\n");
+
+                    //echo("insertInitialData($data, $systemId);\n");
+                }
+                echo("\n\n");
+            }
+        ?>
+    </script>
 </body>
 </html>
