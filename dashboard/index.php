@@ -3,13 +3,10 @@
     include "../files/php/config/config.php";
     include "../files/php/config/sql.php";
 
-    // Check if user is logged in, if not, redirect to login
-    if (!isset($_SESSION["userid"])) {
-        header("Location: ".$filePath."login?redirect=dashboard");
-        die("Bitte zuerst <a href='".$filePath."login'>einloggen</a>");
-    }
-
     $page = "dashboard";
+
+    // Check authentication
+    include "../files/php/templates/check-authentication.php";
 
     // Get relevant data
     $statement = $pdo->prepare("SELECT * FROM systems WHERE userid = :userid");
