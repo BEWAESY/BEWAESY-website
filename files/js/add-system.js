@@ -41,7 +41,7 @@ function generateResponse(rawResponse) {
                 </div>
             </div>
 
-            <p class="mt-2">Dein Bewässerungssystem wurde erfolgreich hinzugefügt. Bitte füge die folgenden Daten auf deinem Bewässerungssystem hinzu, damit es mit unserer API kommunizieren kann. Wie das geht kannst du <a href="../help/add-system">hier</a> einsehen:</p>
+            <p class="mt-2">Dein Bewässerungssystem wurde erfolgreich hinzugefügt. Bitte füge die folgenden Daten auf deinem Bewässerungssystem hinzu, damit es mit unserer API kommunizieren kann. Wie das geht kannst du <a href="../help/add-system" target="blank">hier</a> einsehen:</p>
             <hr>
             <p class="mb-0">ID: ${id}</p>
             <p>API-Key: ${apiKey}</p>
