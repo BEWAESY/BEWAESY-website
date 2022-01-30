@@ -15,6 +15,25 @@ var triggerIds = [];
 
 
 
+// Settings Modal
+$("#settingsModal").on("show.bs.modal", function(event) {
+    let button = event.relatedTarget;
+
+    // Get required values
+    let systemId = $(button).attr("data-bs-systemId");
+    let systemName = $(button).attr("data-bs-systemName");
+    let cooldown = $(button).attr("data-bs-cooldown");
+    let maxSeconds = $(button).attr("data-bs-maxSeconds");
+
+    // Insert proper values into modal
+    $("#settingsModalLabel").empty().html(`Einstellungen <b>${systemName}</b>`);
+    $("#settingsInputName").val(systemName);
+    $("#settingsInputCooldown").val(cooldown);
+    $("#settingsInputMaxSeconds").val(maxSeconds);
+});
+
+
+
 // Save changed system settings
 $(document).ready(function() {
     $("form").submit(function() {
