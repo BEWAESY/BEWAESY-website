@@ -36,20 +36,12 @@ $("#settingsModal").on("show.bs.modal", function(event) {
 
 // Save changed system settings
 $(document).ready(function() {
-    $("form").submit(function() {
+    $(".systemForm").submit(function() {
         let systemid = $(this).attr("id");
-
-        // Get cooldown and max Seconds
-        let cooldown = $(`#cooldown${systemid}`).val();
-        let maxSeconds = $(`#maxSeconds${systemid}`).val();
 
         // organize data
         let sendData = [];
-        let systemData = {
-            "id": systemid,
-            "cooldown": cooldown,
-            "maxSeconds": maxSeconds
-        };
+        let systemData = {"id": systemid};
         sendData.push(systemData);
 
         // Get triggers

@@ -75,7 +75,7 @@
             
                                         <hr class="mt-4">
             
-                                        <form id="$id">
+                                        <form id="$id" class="systemForm">
                                             <h2 class="mt-3 mb-3">Auslöser</h2>
 
                                             <div id="addTriggers$id">
