@@ -256,7 +256,7 @@ $("#settingsModal").on("show.bs.modal", function(event) {
 
     // Insert proper values into modal
     $("#saveSettingsForm").attr("data-bs-systemId", systemId);
-    $("#settingsModalLabel").empty().html(`Einstellungen <b>${systemName}</b>`);
+    $("#settingsModalLabel").empty().text(`Einstellungen ${systemName}`);
     $("#settingsInputName").val(systemName);
     $("#settingsInputCooldown").val(cooldown);
     $("#settingsInputMaxSeconds").val(maxSeconds);
@@ -286,7 +286,20 @@ $(document).ready(function() {
             type: "post",
             data: sendData,
             success: function(response) {
-                alert(response);
+                //alert(response);
+
+                if (response == "Success") {
+                    bootstrap.Modal.getInstance($("#settingsModal")).hide();
+
+                    let button = $(`#settingsButton${systemId}`);
+
+                    // Update data on page
+                    $(button).attr("data-bs-systemName", name);
+                    $(button).attr("data-bs-cooldown", cooldown);
+                    $(button).attr("data-bs-maxSeconds", maxSeconds);
+
+                    $(`#systemAccordion${systemId}`).empty().text(name);
+                }
             }
         })
         

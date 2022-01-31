@@ -46,20 +46,20 @@
                     foreach ($systems as $systemKey => $singleSystem) {
                         // Get needed values
                         $id = $singleSystem["id"];
-                        $name = htmlspecialchars($singleSystem["name"]);
-                        $cooldown = htmlspecialchars($singleSystem["cooldown"]);
-                        $maxSeconds = htmlspecialchars($singleSystem["maxSeconds"]);
+                        $name = htmlspecialchars(htmlspecialchars_decode($singleSystem["name"]));
+                        $cooldown = htmlspecialchars(htmlspecialchars_decode($singleSystem["cooldown"]));
+                        $maxSeconds = htmlspecialchars(htmlspecialchars_decode($singleSystem["maxSeconds"]));
 
                         echo <<<END
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="systems-heading$id">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#systems-collapse$id" aria-expanded="true" aria-controls="systems-collapse$id">
+                                <button id="systemAccordion$id" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#systems-collapse$id" aria-expanded="true" aria-controls="systems-collapse$id">
                                     $name
                                 </button>
                                 </h2>
                                 <div id="systems-collapse$id" class="accordion-collapse collapse" aria-labelledby="systems-heading$id" data-bs-parent="#accordionSystems">
                                     <div class="accordion-body">
-                                        <button type="button" class="btn btn-secondary shadow-none" style="float: right;" data-bs-toggle="modal" data-bs-target="#settingsModal" data-bs-systemId="$id" data-bs-systemName="$name" data-bs-cooldown="$cooldown" data-bs-maxSeconds="$maxSeconds">
+                                        <button type="button" id="settingsButton$id" class="btn btn-secondary shadow-none" style="float: right;" data-bs-toggle="modal" data-bs-target="#settingsModal" data-bs-systemId="$id" data-bs-systemName="$name" data-bs-cooldown="$cooldown" data-bs-maxSeconds="$maxSeconds">
                                             Einstellungen
                                         </button>
 
