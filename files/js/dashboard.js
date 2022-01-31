@@ -14,26 +14,6 @@ var newCounter = 0;
 var triggerIds = [];
 
 
-
-// Settings Modal
-$("#settingsModal").on("show.bs.modal", function(event) {
-    let button = event.relatedTarget;
-
-    // Get required values
-    let systemId = $(button).attr("data-bs-systemId");
-    let systemName = $(button).attr("data-bs-systemName");
-    let cooldown = $(button).attr("data-bs-cooldown");
-    let maxSeconds = $(button).attr("data-bs-maxSeconds");
-
-    // Insert proper values into modal
-    $("#settingsModalLabel").empty().html(`Einstellungen <b>${systemName}</b>`);
-    $("#settingsInputName").val(systemName);
-    $("#settingsInputCooldown").val(cooldown);
-    $("#settingsInputMaxSeconds").val(maxSeconds);
-});
-
-
-
 // Save changed system settings
 $(document).ready(function() {
     $(".systemForm").submit(function() {
@@ -259,3 +239,56 @@ function create_db_triggers(triggerData) {
         $(`#triggerThirdValue${id}`).val(triggerValue1).blur();
     }
 }
+
+
+
+
+
+// Settings Modal
+$("#settingsModal").on("show.bs.modal", function(event) {
+    let button = event.relatedTarget;
+
+    // Get required values
+    let systemId = $(button).attr("data-bs-systemId");
+    let systemName = $(button).attr("data-bs-systemName");
+    let cooldown = $(button).attr("data-bs-cooldown");
+    let maxSeconds = $(button).attr("data-bs-maxSeconds");
+
+    // Insert proper values into modal
+    $("#saveSettingsForm").attr("data-bs-systemId", systemId);
+    $("#settingsModalLabel").empty().html(`Einstellungen <b>${systemName}</b>`);
+    $("#settingsInputName").val(systemName);
+    $("#settingsInputCooldown").val(cooldown);
+    $("#settingsInputMaxSeconds").val(maxSeconds);
+});
+
+// Save settings modal
+$(document).ready(function() {
+    $("#saveSettingsForm").submit(function() {
+        let systemId = $("#saveSettingsForm").attr("data-bs-systemId");
+
+        // Get needed values
+        let name = $("#settingsInputName").val();
+        let cooldown = $("#settingsInputCooldown").val();
+        let maxSeconds = $("#settingsInputMaxSeconds").val();
+
+        // Organize data
+        let sendData = {
+            "name":       name,
+            "cooldown":   cooldown,
+            "maxSeconds": maxSeconds
+        }
+
+        // Send data to PHP script
+        $.ajax({
+            url: "../files/ajax/saveSystemSettings.php",
+            type: "post",
+            data: sendData,
+            success: function(response) {
+                alert(response);
+            }
+        })
+        
+        return(false);
+    })
+});

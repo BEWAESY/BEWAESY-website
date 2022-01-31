@@ -102,23 +102,23 @@
                 <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
-                            <form action=".">
+                            <form id="saveSettingsForm" data-bs-systemId="">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="settingsModalLabel">Einstellungen System "[NAME]"</h5>
+                                    <h5 class="modal-title" id="settingsModalLabel">Einstellungen System <b>[NAME]</b></h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <label for="settingsInputName" class="form-label">Name</label>
-                                    <input type="text" class="form-control" id="settingsInputName">
+                                    <input type="text" class="form-control" id="settingsInputName" required>
 
                                     <label for="settingsInputCooldown" class="form-label mt-3">Cooldown (in Sekunden)</label>
-                                    <input type="number" id="settingsInputCooldown" class="form-control" aria-describedby="cooldownHelpBlock" min="0">
+                                    <input type="number" id="settingsInputCooldown" class="form-control" aria-describedby="cooldownHelpBlock" min="0" required>
                                     <div id="cooldownHelpBlock" class="form-text">
                                         0 eintragen für keinen Cooldown
                                     </div>
     
                                     <label for="settingsInputmaxSeconds" class="form-label mt-2">Max. Sekunden / Tag</label>
-                                    <input type="number" id="settingsInputMaxSeconds" class="form-control" aria-describedby="maxSecondsHelpBlock" min="0">
+                                    <input type="number" id="settingsInputMaxSeconds" class="form-control" aria-describedby="maxSecondsHelpBlock" min="0" required>
                                     <div id="maxSecondsHelpBlock" class="form-text">
                                         0 eintragen für kein Maximum
                                     </div>
