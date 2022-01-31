@@ -274,6 +274,7 @@ $(document).ready(function() {
 
         // Organize data
         let sendData = {
+            "systemId":   systemId,
             "name":       name,
             "cooldown":   cooldown,
             "maxSeconds": maxSeconds
