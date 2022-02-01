@@ -322,7 +322,7 @@ $("#deleteSystemModal").on("show.bs.modal", function(event) {
     // Insert proper values into modal
     $("#deleteSystemForm").attr("data-bs-systemId", systemId);
     $("#deleteSystemModalLabel").text(`System ${systemName} löschen`);
-    $("#deleteSystemBodyText").text(`Soll dieses Bewässerungssystem wirklich gelöscht werden? Dann gib bitte "${systemName}" ein und klicke anschließend auf "Löschen":`);
+    $("#deleteSystemBodyText").text(`Soll dieses Bewässerungssystem wirklich gelöscht werden? Dabei gehen auch alle Statistiken über dieses System verloren. Gib bitte "${systemName}" ein und klicke anschließend auf "Löschen":`);
     $("#deleteSystemNameInput").attr("placeholder", systemName).attr("data-bs-systemName", systemName).val("");
     $("#deleteSystemSubmitButton").attr("disabled", true);
 });
@@ -338,4 +338,36 @@ $("#deleteSystemNameInput").on("input", function() {
     } else {
         $("#deleteSystemSubmitButton").attr("disabled", true);
     }
+});
+
+// Submit delete system Modal
+$(document).ready(function() {
+    $("#deleteSystemForm").submit(function() {
+        let systemId = $("#deleteSystemForm").attr("data-bs-systemId");
+
+        // Send data to PHP script
+        $.ajax({
+            url: "../files/ajax/deleteSystem.php",
+            type: "post",
+            data: {"systemId": systemId},
+            success: function(response) {
+                alert(response);
+
+                /*if (response == "Success") {
+                    bootstrap.Modal.getInstance($("#settingsModal")).hide();
+
+                    let button = $(`#settingsButton${systemId}`);
+
+                    // Update data on page
+                    $(button).attr("data-bs-systemName", name);
+                    $(button).attr("data-bs-cooldown", cooldown);
+                    $(button).attr("data-bs-maxSeconds", maxSeconds);
+
+                    $(`#systemAccordion${systemId}`).empty().text(name);
+                }*/
+            }
+        })
+        
+        return(false);
+    })
 });
