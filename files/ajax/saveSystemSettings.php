@@ -14,7 +14,7 @@
     $maxSeconds = htmlspecialchars(@$_POST["maxSeconds"]);
 
     // Check if all required variables exist
-    if (empty($systemid) || empty($name) || empty($cooldown) || empty($maxSeconds)) die("400");
+    if (empty($systemid) || empty($name)) die("400");
 
 
     // Check if user is allowed to change this data
