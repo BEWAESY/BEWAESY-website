@@ -104,7 +104,7 @@
                         <div class="modal-content">
                             <form id="saveSettingsForm" data-bs-systemId="">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="settingsModalLabel">Einstellungen System <b>[NAME]</b></h5>
+                                    <h5 class="modal-title" id="settingsModalLabel">Einstellungen <b id="settingsModalLabelName">[NAME]</b></h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
@@ -145,13 +145,13 @@
                         <div class="modal-content">
                             <form id="deleteSystemForm" data-bs-systemId="" autocomplete="off">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="deleteSystemModalLabel">System <b>[NAME]</b> löschen</h5>
+                                    <h5 class="modal-title" id="deleteSystemModalLabel"><b id="deleteSystemModalLabelName">[NAME]</b> löschen</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <p id="deleteSystemBodyText" class="mb-2">Soll dieses Bewässerungssystem wirklich gelöscht werden? Dann gib bitte [NAME] ein und klicke anschließend auf "Löschen":</p>
+                                    <p id="deleteSystemBodyText" class="mb-2">Soll dieses Bewässerungssystem wirklich gelöscht werden? Dabei gehen auch alle Statistiken über dieses System verloren. Gib bitte <b id="deleteSystemBodyTextName">[NAME]</b> ein und klicke anschließend auf "Löschen":</p>
 
-                                    <input type="text" class="form-control" id="deleteSystemNameInput" placeholder="[NAME]" required>
+                                    <input type="text" class="form-control" id="deleteSystemNameInput" placeholder="[NAME]" required autofocus>
 
                                 </div>
                                 <div class="modal-footer">

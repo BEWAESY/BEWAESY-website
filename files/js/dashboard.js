@@ -256,7 +256,7 @@ $("#settingsModal").on("show.bs.modal", function(event) {
 
     // Insert proper values into modal
     $("#saveSettingsForm").attr("data-bs-systemId", systemId);
-    $("#settingsModalLabel").empty().text(`Einstellungen ${systemName}`);
+    $("#settingsModalLabelName").empty().text(systemName);
     $("#settingsDeleteModal").attr("data-bs-systemId", systemId).attr("data-bs-systemName", systemName);
 
     $("#settingsInputName").val(systemName);
@@ -321,11 +321,15 @@ $("#deleteSystemModal").on("show.bs.modal", function(event) {
 
     // Insert proper values into modal
     $("#deleteSystemForm").attr("data-bs-systemId", systemId);
-    $("#deleteSystemModalLabel").text(`System ${systemName} löschen`);
-    $("#deleteSystemBodyText").text(`Soll dieses Bewässerungssystem wirklich gelöscht werden? Dabei gehen auch alle Statistiken über dieses System verloren. Gib bitte "${systemName}" ein und klicke anschließend auf "Löschen":`);
+    $("#deleteSystemModalLabelName").text(systemName);
+    $("#deleteSystemBodyTextName").text(systemName);
     $("#deleteSystemNameInput").attr("placeholder", systemName).attr("data-bs-systemName", systemName).val("");
     $("#deleteSystemSubmitButton").attr("disabled", true);
 });
+// Focus on delete system input field when modal has finished animation
+$("#deleteSystemModal").on("shown.bs.modal", function() {
+    $("#deleteSystemNameInput").focus();
+})
 
 // Delete System check input
 $("#deleteSystemNameInput").on("input", function() {
