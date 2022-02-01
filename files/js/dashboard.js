@@ -257,6 +257,8 @@ $("#settingsModal").on("show.bs.modal", function(event) {
     // Insert proper values into modal
     $("#saveSettingsForm").attr("data-bs-systemId", systemId);
     $("#settingsModalLabel").empty().text(`Einstellungen ${systemName}`);
+    $("#settingsDeleteModal").attr("data-bs-systemId", systemId).attr("data-bs-systemName", systemName);
+
     $("#settingsInputName").val(systemName);
     $("#settingsInputCooldown").val(cooldown);
     $("#settingsInputMaxSeconds").val(maxSeconds);
@@ -305,4 +307,35 @@ $(document).ready(function() {
         
         return(false);
     })
+});
+
+
+
+// Delete System Modal
+$("#deleteSystemModal").on("show.bs.modal", function(event) {
+    let button = event.relatedTarget;
+
+    // Get required values
+    let systemId = $(button).attr("data-bs-systemId");
+    let systemName = $(button).attr("data-bs-systemName");
+
+    // Insert proper values into modal
+    $("#deleteSystemForm").attr("data-bs-systemId", systemId);
+    $("#deleteSystemModalLabel").text(`System ${systemName} löschen`);
+    $("#deleteSystemBodyText").text(`Soll dieses Bewässerungssystem wirklich gelöscht werden? Dann gib bitte "${systemName}" ein und klicke anschließend auf "Löschen":`);
+    $("#deleteSystemNameInput").attr("placeholder", systemName).attr("data-bs-systemName", systemName).val("");
+    $("#deleteSystemSubmitButton").attr("disabled", true);
+});
+
+// Delete System check input
+$("#deleteSystemNameInput").on("input", function() {
+    // Get required values
+    let systemName = $(this).attr("data-bs-systemName").toLowerCase();
+    let inputValue = $(this).val().toLowerCase();
+
+    if (systemName == inputValue) {
+        $("#deleteSystemSubmitButton").attr("disabled", false);
+    } else {
+        $("#deleteSystemSubmitButton").attr("disabled", true);
+    }
 });
