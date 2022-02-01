@@ -126,13 +126,37 @@
                                     <hr class="mt-4 mb-2">
 
                                     <h3 class="mb-2">Bewässerungssystem löschen</h3>
-                                    <button type="button" class="btn btn-danger">
+                                    <button type="button" class="btn btn-danger" data-bs-target="#deleteSystemModal" data-bs-toggle="modal">
                                         System löschen
                                     </button>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Abbrechen</button>
                                     <input type="submit" class="btn btn-primary" value="Speichern">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Delete System Modal -->
+                <div class="modal fade" id="deleteSystemModal" tabindex="-1" aria-labelledby="deleteSystemModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form id="deleteSystemForm" data-bs-systemId="">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteSystemModalLabel">System <b>[NAME]</b> löschen</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Soll dieses Bewässerungssystem wirklich gelöscht werden? Dann gib bitte [NAME] ein und klicke anschließend auf "Löschen":
+
+                                    <input type="text" class="form-control mt-2" id="settingsInputName" placeholder="[NAME]" required>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                                    <input type="submit" class="btn btn-danger" value="Löschen" disabled>
                                 </div>
                             </form>
                         </div>
