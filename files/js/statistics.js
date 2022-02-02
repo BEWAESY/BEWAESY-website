@@ -11,6 +11,18 @@ function addLog(timestamp, seconds, systemid) {
 function loadAdditionalLogData(systemid) {
     // Disable button and add loading animation
     $(`#moreDataButton${systemid}`).prop("disabled", true).prepend('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ');
+
+    // Get number of rows
+    let records = $(`#tbody${systemid} tr`).length;
+
+    $.ajax({
+        url: "../files/ajax/getAdditionalSystems.php",
+        type: "post",
+        data: {"systemId": systemid, "records": records},
+        success: function(response) {
+            alert(response);
+        }
+    });
 }
 
 
