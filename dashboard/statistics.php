@@ -91,7 +91,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                        <div><button id="moreDataButton$systemId" type="button" class="btn btn-outline-secondary shadow-none" onclick="loadAdditionalLogData($systemId)">Mehr laden</button></div>
+                                        <div><button id="moreDataButton$systemId" type="button" class="btn btn-outline-secondary shadow-none" onclick="loadAdditionalLogData($systemId)" style="display: none;">Mehr laden</button></div>
                                     END;
                                 }
                             ?>
@@ -121,6 +121,16 @@
                 $systemId = $singleSystem["id"];
 
                 echo("// System $systemId\n\n");
+
+                // Skip if there is no log data
+                if (empty($singleSystem["logs"])) {
+                    echo("// No Logs for System $systemId\n\n");
+                    break;
+                }
+
+                // Show more data button if all events are there
+                if (count($singleSystem["logs"]) >= 5) echo("// Show more data button\n$('#moreDataButton$systemId').show();");
+
 
                 echo("// Logs\n");
                 foreach ($singleSystem["logs"] as $singleSystemLog) {
