@@ -139,8 +139,8 @@
                     // Get data
                     $seconds = $singleSystemLog["seconds"];
 
-                    $logTimestamp = strtotime($singleSystemLog["timestamp"]." UTC");
-                    $logInLocalTime = json_encode(date("d.m.Y H:i:s", $logTimestamp));
+                    $logTimestamp = strtotime($singleSystemLog["timestamp"]." GMT+0100");
+                    $logInLocalTime = json_encode(date("d.m.Y H:i", $logTimestamp));
 
                     echo("addLog($logInLocalTime, $seconds, $systemId);\n");
 
