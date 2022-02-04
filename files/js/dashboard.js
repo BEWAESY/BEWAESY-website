@@ -355,20 +355,13 @@ $(document).ready(function() {
             type: "post",
             data: {"systemId": systemId},
             success: function(response) {
-                alert(response);
+                if (response == "Success") {
+                    // Close Modal
+                    bootstrap.Modal.getInstance($("#deleteSystemModal")).hide();
 
-                /*if (response == "Success") {
-                    bootstrap.Modal.getInstance($("#settingsModal")).hide();
-
-                    let button = $(`#settingsButton${systemId}`);
-
-                    // Update data on page
-                    $(button).attr("data-bs-systemName", name);
-                    $(button).attr("data-bs-cooldown", cooldown);
-                    $(button).attr("data-bs-maxSeconds", maxSeconds);
-
-                    $(`#systemAccordion${systemId}`).empty().text(name);
-                }*/
+                    // Remove system from page
+                    $(`#accordion${systemId}`).remove();
+                }
             }
         })
         

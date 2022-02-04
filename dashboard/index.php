@@ -9,7 +9,7 @@
     include "../files/php/templates/check-authentication.php";
 
     // Get relevant data
-    $statement = $pdo->prepare("SELECT * FROM systems WHERE userid = :userid");
+    $statement = $pdo->prepare("SELECT * FROM systems WHERE userid = :userid ORDER BY created");
     $result = $statement->execute(array("userid" => $_SESSION["userid"]));
     $systems = $statement->fetchAll();
 
@@ -51,7 +51,7 @@
                         $maxSeconds = htmlspecialchars(htmlspecialchars_decode($singleSystem["maxSeconds"]));
 
                         echo <<<END
-                            <div class="accordion-item">
+                            <div id="accordion$id" class="accordion-item">
                                 <h2 class="accordion-header" id="systems-heading$id">
                                 <button id="systemAccordion$id" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#systems-collapse$id" aria-expanded="true" aria-controls="systems-collapse$id">
                                     $name
