@@ -257,6 +257,7 @@ $("#settingsModal").on("show.bs.modal", function(event) {
     // Insert proper values into modal
     $("#saveSettingsForm").attr("data-bs-systemId", systemId);
     $("#settingsModalLabelName").empty().text(systemName);
+    $("#apiKeyPasswordModalTriggerButton").attr("data-bs-systemId", systemId).attr("data-bs-systemName", systemName);
     $("#settingsDeleteModal").attr("data-bs-systemId", systemId).attr("data-bs-systemName", systemName);
 
     $("#settingsInputName").val(systemName);
@@ -308,6 +309,80 @@ $(document).ready(function() {
         return(false);
     })
 });
+
+
+
+// API-Key Modal
+// API-Key password Modal
+$("#apiKeyPasswordModal").on("show.bs.modal", function(event) {
+    let button = event.relatedTarget;
+
+    // Get required values
+    let systemId = $(button).attr("data-bs-systemId");
+    let systemName = $(button).attr("data-bs-systemName");
+
+    // Insert proper values into modal
+    $("#apiKeyPasswordModalForm").attr("data-bs-systemId", systemId);
+    $("#apiKeyPasswordModalLabelName").text(systemName);
+});
+// Focus on password input field when modal has finished animation
+$("#apiKeyPasswordModal").on("shown.bs.modal", function() {
+    $("#apiKeyPassword").focus();
+})
+// Remove password from input when modal is closed
+$("#apiKeyPasswordModal").on("hidden.bs.modal", function() {
+    $("#apiKeyPassword").val("").removeClass("is-invalid");
+})
+
+// Remove API-key from modal when that is closed
+$("#apiKeyDataModal").on("hidden.bs.modal", function() {
+    $("#apiKeyDataModalApiKeyPlaceholder").text("");
+})
+
+// Submit API-Key password Modal
+$(document).ready(function() {
+    $("#apiKeyPasswordModalForm").submit(function() {
+        // Deactivate input and submit button
+        $("#apiKeyPassword").attr("disabled", true);
+        $("#apiKeyPasswordModalSubmitButton").attr("disabled", true);
+        $("#apiKeyPassword").removeClass("is-invalid");
+
+        let systemId = $("#apiKeyPasswordModalForm").attr("data-bs-systemId");
+
+        // Send data to PHP script
+        $.ajax({
+            url: "../files/ajax/getApiKey.php",
+            type: "post",
+            data: {"systemId": systemId, "password": $("#apiKeyPassword").val()},
+            success: function(response) {
+                try {
+                    response = JSON.parse(response);
+                } catch {}
+
+                if (response[0] == "Success") {
+                    // Hide this modal
+                    bootstrap.Modal.getInstance($("#apiKeyPasswordModal")).hide();
+
+                    // Show the modal with data
+                    new bootstrap.Modal($("#apiKeyDataModal")).show();
+
+                    // Insert data
+                    $("#apiKeyDataModalLabelName").text(response[1]);
+                    $("#apiKeyDataModalIdPlaceholder").text(systemId);
+                    $("#apiKeyDataModalApiKeyPlaceholder").text(response[2]);
+                } else if (response == "wrongPassword") {
+                    $("#apiKeyPassword").addClass("is-invalid");
+                }
+
+                $("#apiKeyPassword").attr("disabled", false);
+                $("#apiKeyPasswordModalSubmitButton").attr("disabled", false);
+            }
+        })
+        
+        return(false);
+    })
+});
+
 
 
 

@@ -123,9 +123,16 @@
                                         0 eintragen für kein Maximum
                                     </div>
 
-                                    <hr class="mt-4 mb-2">
+                                    <hr class="mt-4 mb-3">
 
-                                    <h3 class="mb-2">Bewässerungssystem löschen</h3>
+                                    <h3 class="mb-3">System verbinden</h3>
+                                    <button id="apiKeyPasswordModalTriggerButton" type="button" class="btn btn-secondary" data-bs-target="#apiKeyPasswordModal" data-bs-toggle="modal">
+                                        Details abrufen
+                                    </button>
+
+                                    <hr class="mt-4 mb-3">
+
+                                    <h3 class="mb-3">Bewässerungssystem löschen</h3>
                                     <button id="settingsDeleteModal" type="button" class="btn btn-danger" data-bs-target="#deleteSystemModal" data-bs-toggle="modal">
                                         System löschen
                                     </button>
@@ -138,6 +145,60 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- API Key password modal -->
+                <div class="modal fade" id="apiKeyPasswordModal" tabindex="-1" aria-labelledby="apiKeyPasswordModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form id="apiKeyPasswordModalForm" data-bs-systemId="">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="apiKeyPasswordModal">API-Key für <b id="apiKeyPasswordModalLabelName">[NAME]</b> abrufen</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <label for="apiKeyPassword" class="form-label">Passwort</label>
+                                    <input type="password" class="form-control" id="apiKeyPassword" required autofocus>
+                                    <div class="invalid-feedback">Falsches Passwort</div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                                    <input type="submit" id="apiKeyPasswordModalSubmitButton" class="btn btn-primary" value="Weiter">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- API KEY display data -->
+                <div class="modal fade" id="apiKeyDataModal" tabindex="-1" aria-labelledby="apiKeyDataModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="apiKeyDataModal">API-Key für <b id="apiKeyDataModalLabelName">[NAME]</b> abrufen</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+
+                                <div class="alert alert-primary d-flex align-items-center" role="alert">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                                    </svg>
+                                    <div>Informationen, wie du dein Bewässerungssystem hinzufügen kannst, findest du <a href="../help/add-system" target="blank">hier</a></div>
+                                </div>
+
+
+                                ID: <p id="apiKeyDataModalIdPlaceholder" style="display: inline"></p><br>
+                                API-Key: <p id="apiKeyDataModalApiKeyPlaceholder" style="display: inline"></p><br>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Schließen</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
 
                 <!-- Delete System Modal -->
                 <div class="modal fade" id="deleteSystemModal" tabindex="-1" aria-labelledby="deleteSystemModalLabel" aria-hidden="true">
