@@ -1,3 +1,9 @@
+document.getElementById("weekInput").valueAsDate = new Date();
+
+
+
+
+
 // Graphs
 /*var ctx = document.getElementById('myChart')
 // eslint-disable-next-line no-unused-vars

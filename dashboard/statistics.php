@@ -51,10 +51,10 @@
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link disabled" id="gießzeiten-tab" data-bs-toggle="tab" data-bs-target="#gießzeiten" type="button" role="tab" aria-controls="gießzeiten" aria-selected="true">Gießzeiten</button>
+                            <button class="nav-link active" id="gießzeiten-tab" data-bs-toggle="tab" data-bs-target="#gießzeiten" type="button" role="tab" aria-controls="gießzeiten" aria-selected="true">Gießzeiten</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="ereignisse-tab" data-bs-toggle="tab" data-bs-target="#ereignisse" type="button" role="tab" aria-controls="ereignisse" aria-selected="false">Letzte Ereignisse</button>
+                            <button class="nav-link" id="ereignisse-tab" data-bs-toggle="tab" data-bs-target="#ereignisse" type="button" role="tab" aria-controls="ereignisse" aria-selected="false">Letzte Ereignisse</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link disabled" id="sensordaten-tab" data-bs-toggle="tab" data-bs-target="#sensordaten" type="button" role="tab" aria-controls="sonsordaten" aria-selected="false">Sensordaten der Pflanze</button>
@@ -63,12 +63,17 @@
                 </div>
                 <div class="card-body">
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade" id="gießzeiten" role="tabpanel" aria-labelledby="gießzeiten-tab">
+                        <div class="tab-pane fade show active" id="gießzeiten" role="tabpanel" aria-labelledby="gießzeiten-tab">
                             <!-- Gießzeiten -->
-                            <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+                            <h1>Gießzeiten</h1>
+
+                            <label for="weekInput" class="form-label">Woche auswählen:</label>
+                            <input type="date" class="form-control" id="weekInput" style="width: auto;">
+                            
+                            <!--<canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>-->
                         </div>
 
-                        <div class="tab-pane fade show active" id="ereignisse" role="tabpanel" aria-labelledby="ereignisse-tab">
+                        <div class="tab-pane fade" id="ereignisse" role="tabpanel" aria-labelledby="ereignisse-tab">
                             <?php
                                 foreach ($systems as $systemKey => $singleSystem) {
                                     // Get needed values
