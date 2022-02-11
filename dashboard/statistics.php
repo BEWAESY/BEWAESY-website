@@ -110,7 +110,9 @@
     <script src="../files/addons/bootstrap.bundle.min.js"></script>
     <script src="../files/addons/jquery-3.6.0.min.js"></script>
     <script src="../files/addons/Chart.min.js"></script>
-    <script src="../files/js/statistics.js"></script>
+    
+    <script src="../files/js/statistics-chart.js"></script>
+    <script src="../files/js/statistics-list.js"></script>
 
     <script>
         <?php
