@@ -68,7 +68,7 @@
                             <h1>Gießzeiten</h1>
 
                             <label for="weekInput" class="form-label">Woche auswählen:</label>
-                            <input type="date" class="form-control" id="weekInput" style="width: auto;">
+                            <input type="date" class="form-control" id="weekInput" style="width: auto;" onchange="dateChange();">
                             
                             <!--<canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>-->
                         </div>

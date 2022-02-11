@@ -1,4 +1,41 @@
-document.getElementById("weekInput").valueAsDate = new Date();
+let currentDate = new Date().toISOString().slice(0, 10);
+$("#weekInput").val(currentDate).attr("max", currentDate);
+$("#weekInput").attr("data-bs-monday", getMonday(new Date()).toDateString());
+
+function dateChange() {
+    // Get date
+    let dateInput = new Date($("#weekInput").val());
+    
+    // Check if date lies in the future
+    if (dateInput > new Date()) return;
+
+    // Get Monday of current week
+    let dateInputWeek = getMonday(dateInput);
+
+
+    // Check if Monday has changed with new input, and abort if not
+    if (dateInputWeek.toDateString() == $("#weekInput").attr("data-bs-monday")) return;
+
+    
+    // Send data to PHP
+    $.ajax({
+        url: "../files/ajax/getChartData.php",
+        type: "post",
+        data: {"mondayDate": dateInputWeek.toISOString().slice(0, 10)},
+        success: function(response) {
+            alert(response);
+        }
+    });
+}
+
+
+function getMonday(dateInput) {
+    let dateInputMonday = dateInput.getDate() - dateInput.getDay() + (dateInput.getDay() == 0 ? -6 : 1);
+    return new Date(dateInput.setDate(dateInputMonday));
+}
+
+
+
 
 
 
