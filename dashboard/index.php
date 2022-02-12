@@ -157,7 +157,7 @@
                                 </div>
                                 <div class="modal-body">
 
-                                    <label for="apiKeyPassword" class="form-label">Passwort</label>
+                                    <label for="apiKeyPassword" class="form-label">Passwort für <b id="apiKeyPasswordEmail"></b>:</label>
                                     <input type="password" class="form-control" id="apiKeyPassword" required autofocus>
                                     <div class="invalid-feedback">Falsches Passwort</div>
 
@@ -232,6 +232,10 @@
     <script src="../files/js/dashboard.js"></script>
     <script>
         <?php
+            $userEmail = $_SESSION["userEmail"];
+            echo("var userEmail = '$userEmail';");
+
+
             // Call function to create triggers
             foreach ($systems as $systemKey => $singleSystem) {
                 $systemId = $singleSystem["id"];

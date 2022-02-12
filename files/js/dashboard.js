@@ -339,6 +339,7 @@ $("#apiKeyPasswordModal").on("show.bs.modal", function(event) {
     // Insert proper values into modal
     $("#apiKeyPasswordModalForm").attr("data-bs-systemId", systemId);
     $("#apiKeyPasswordModalLabelName").text(systemName);
+    $("#apiKeyPasswordEmail").text(userEmail);
 });
 // Focus on password input field when modal has finished animation
 $("#apiKeyPasswordModal").on("shown.bs.modal", function() {
@@ -391,6 +392,8 @@ $(document).ready(function() {
                     $("#apiKeyDataModalApiKeyPlaceholder").text(response[2]);
                 } else if (response == "wrongPassword") {
                     $("#apiKeyPassword").addClass("is-invalid");
+                } else {
+                    alert("Something went wrong");
                 }
 
                 $("#apiKeyPassword").attr("disabled", false);
