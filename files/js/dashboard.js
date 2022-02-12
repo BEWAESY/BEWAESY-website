@@ -268,6 +268,10 @@ $("#settingsModal").on("show.bs.modal", function(event) {
 // Save settings modal
 $(document).ready(function() {
     $("#saveSettingsForm").submit(function() {
+        // Show user that the thing is loading and saving
+        $("#settingsSubmitButton").prop("disabled", true).prepend('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ');
+
+
         let systemId = $("#saveSettingsForm").attr("data-bs-systemId");
 
         // Get needed values
@@ -302,7 +306,18 @@ $(document).ready(function() {
                     $(button).attr("data-bs-maxSeconds", maxSeconds);
 
                     $(`#systemAccordion${systemId}`).empty().text(name);
+                } else {
+                    alert("Something went wrong");
+
+                    $("#settingsSubmitButton").prop("disabled", false).find("span").remove();
+                    $("#settingsModal").off();
                 }
+
+                // Reset "save" button when modal is closed
+                $("#settingsModal").on("hidden.bs.modal", function() {
+                    $("#settingsSubmitButton").prop("disabled", false).find("span").remove();
+                    $(this).off();
+                });
             }
         })
         

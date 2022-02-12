@@ -139,7 +139,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Abbrechen</button>
-                                    <input type="submit" class="btn btn-primary" value="Speichern">
+                                    <div><button type="submit" id="settingsSubmitButton" class="btn btn-primary">Speichern</button></div>
                                 </div>
                             </form>
                         </div>
