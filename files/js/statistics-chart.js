@@ -1,6 +1,11 @@
+var eventCounterChartDataset = [];
+
+
 let currentDate = new Date().toISOString().slice(0, 10);
 $("#weekInput").val(currentDate).attr("max", currentDate);
-$("#weekInput").attr("data-bs-monday", getMonday(new Date()).toDateString());
+
+// Call function to show initial chart of this week
+dateChange();
 
 function dateChange() {
     // Get date
@@ -23,7 +28,19 @@ function dateChange() {
         type: "post",
         data: {"mondayDate": dateInputWeek.toISOString().slice(0, 10)},
         success: function(response) {
-            alert(response);
+            try {
+                response = JSON.parse(response);
+            } catch {}
+
+            if (response[0] == "Success") {
+                // Create the chart
+                createChart(response[1]);
+
+                // Set "data-bs-monday" attribute of weekInput
+                $("#weekInput").attr("data-bs-monday", dateInputWeek.toDateString());
+            } else {
+                alert("Something went wrong");
+            }
         }
     });
 }
@@ -36,97 +53,40 @@ function getMonday(dateInput) {
 
 
 
+function createChart(initialData) {
+    $("#eventCounterChart").remove();
+    $("#giesszeiten").append('<canvas class="my-4 w-100" id="eventCounterChart" width="900" height="380"></canvas>')
+
+    let eventCounterChartDataset = [];
+
+    Object.values(initialData).forEach(function(singleSystem) {
+        let color = generateRandomColor();
+        eventCounterChartDataset.push({
+            label: singleSystem["name"],
+            backgroundColor: color,
+            borderColor: color,
+            data: singleSystem["eventCounterData"],
+        })
+    });
 
 
+    const eventCounterChartData = {
+        datasets: eventCounterChartDataset
+    };
+    
+    const eventCounterChartConfig = {
+        type: 'bar',
+        data: eventCounterChartData,
+        options: {}
+    };
+
+    new Chart(
+        document.getElementById('eventCounterChart'),
+        eventCounterChartConfig
+    );
 
 
-
-// Graphs
-/*var ctx = document.getElementById('myChart')
-// eslint-disable-next-line no-unused-vars
-
-
-var data = {
-    labels: [
-        "-14",
-        "-13",
-        "-12",
-        "-11",
-        "-10",
-        "-9",
-        "-8",
-        "-7",
-        "-6",
-        "-5",
-        "-4",
-        "-3",
-        "-2",
-        "gestern",
-        "heute"
-    ],
-    datasets: [
-        {
-            label: "System 1",
-            data: [
-                "5",
-                "10",
-            ],
-            //borderColor: Utils.CHART_COLORS.red,
-            backgroundColor: "transperent",
-        }
-    ]
-};
-
-var myChart = new Chart(ctx, {
-    type: "line",
-    data: data,
-    options: {
-        responsive: true,
-        plugins: {
-            legend: {
-                position: "top",
-            },
-            title: {
-                display: true,
-                text: "Gießzeiten von allen Bewässerungssystemen in den letzten 14 Tagen"
-            }
-        }
-    },
-});*/
-
-
-/*var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-    labels: [
-        'Sunday',
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
-        "asdf"
-    ],
-    datasets: [{
-        data: data,
-        lineTension: 0,
-        backgroundColor: 'transparent',
-        borderColor: '#007bff',
-        borderWidth: 4,
-        pointBackgroundColor: '#007bff'
-    }]
-    },
-    options: {
-    scales: {
-        yAxes: [{
-        ticks: {
-            beginAtZero: false
-        }
-        }]
-    },
-    legend: {
-        display: false
+    function generateRandomColor() {
+        return `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
     }
-    }
-})*/
+}

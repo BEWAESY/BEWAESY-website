@@ -27,7 +27,7 @@
     // Loop through each system and get log data
     foreach ($systems as $systemkey => $singleSystem) {
         // Prepare array
-        $output += [$singleSystem["id"] => array("name" => $singleSystem["name"])];
+        $output += [$singleSystem["id"] => array("name" => $singleSystem["name"], "eventCounterData" => array())];
 
         // Get logs for this system
         $statement = $pdo->prepare("SELECT * FROM systemlog WHERE systemid = :systemid AND timestamp >= Date(:mondayDate) AND timestamp <= DATE_ADD(:mondayDate, INTERVAL 6 DAY)");
@@ -43,9 +43,9 @@
                 return(substr($var["timestamp"], 0, -9) == $checkDate);
             });
 
-            $output[$singleSystem["id"]] += [$day => count($singleDay)];
+            $output[$singleSystem["id"]]["eventCounterData"] += [$day => count($singleDay)];
         }
     }
 
-    print_r($output);
+    print_r(json_encode(["Success", $output]));
 ?>

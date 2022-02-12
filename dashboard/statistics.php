@@ -51,7 +51,7 @@
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="gießzeiten-tab" data-bs-toggle="tab" data-bs-target="#gießzeiten" type="button" role="tab" aria-controls="gießzeiten" aria-selected="true">Gießzeiten</button>
+                            <button class="nav-link active" id="giesszeiten-tab" data-bs-toggle="tab" data-bs-target="#giesszeiten" type="button" role="tab" aria-controls="giesszeiten" aria-selected="true">Gießzeiten</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="ereignisse-tab" data-bs-toggle="tab" data-bs-target="#ereignisse" type="button" role="tab" aria-controls="ereignisse" aria-selected="false">Letzte Ereignisse</button>
@@ -63,14 +63,14 @@
                 </div>
                 <div class="card-body">
                     <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="gießzeiten" role="tabpanel" aria-labelledby="gießzeiten-tab">
+                        <div class="tab-pane fade show active" id="giesszeiten" role="tabpanel" aria-labelledby="giesszeiten-tab">
                             <!-- Gießzeiten -->
                             <h1>Gießzeiten</h1>
 
                             <label for="weekInput" class="form-label">Woche auswählen:</label>
                             <input type="date" class="form-control" id="weekInput" style="width: auto;" onchange="dateChange();">
                             
-                            <!--<canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>-->
+                            <canvas class="my-4 w-100" id="eventCounterChart" width="900" height="380"></canvas>
                         </div>
 
                         <div class="tab-pane fade" id="ereignisse" role="tabpanel" aria-labelledby="ereignisse-tab">
@@ -114,7 +114,7 @@
 
     <script src="../files/addons/bootstrap.bundle.min.js"></script>
     <script src="../files/addons/jquery-3.6.0.min.js"></script>
-    <script src="../files/addons/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <script src="../files/js/statistics-chart.js"></script>
     <script src="../files/js/statistics-list.js"></script>
