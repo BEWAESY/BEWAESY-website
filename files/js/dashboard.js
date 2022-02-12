@@ -328,16 +328,20 @@ $("#apiKeyPasswordModal").on("show.bs.modal", function(event) {
 // Focus on password input field when modal has finished animation
 $("#apiKeyPasswordModal").on("shown.bs.modal", function() {
     $("#apiKeyPassword").focus();
-})
+});
 // Remove password from input when modal is closed
 $("#apiKeyPasswordModal").on("hidden.bs.modal", function() {
     $("#apiKeyPassword").val("").removeClass("is-invalid");
+});
+// Remove "is-invalid" class from password input when input is modified
+$("#apiKeyPassword").on("input", function() {
+    $(this).removeClass("is-invalid");
 })
 
 // Remove API-key from modal when that is closed
 $("#apiKeyDataModal").on("hidden.bs.modal", function() {
     $("#apiKeyDataModalApiKeyPlaceholder").text("");
-})
+});
 
 // Submit API-Key password Modal
 $(document).ready(function() {
