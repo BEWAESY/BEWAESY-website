@@ -310,13 +310,13 @@ $(document).ready(function() {
                     alert("Something went wrong");
 
                     $("#settingsSubmitButton").prop("disabled", false).find("span").remove();
-                    $("#settingsModal").off();
+                    $("#settingsModal").unbind("hidden.bs.modal.saveEvent");
                 }
 
                 // Reset "save" button when modal is closed
-                $("#settingsModal").on("hidden.bs.modal", function() {
+                $("#settingsModal").on("hidden.bs.modal.saveEvent", function() {
                     $("#settingsSubmitButton").prop("disabled", false).find("span").remove();
-                    $(this).off();
+                    $(this).unbind("hidden.bs.modal.saveEvent");
                 });
             }
         })
