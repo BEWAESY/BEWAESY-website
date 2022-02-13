@@ -9,7 +9,7 @@
     include "../files/php/templates/check-authentication.php";
 
     // Get relevant data
-    $statement = $pdo->prepare("SELECT * FROM systems WHERE userid = :userid");
+    $statement = $pdo->prepare("SELECT * FROM systems WHERE userid = :userid ORDER BY created");
     $result = $statement->execute(array("userid" => $_SESSION["userid"]));
     $systems = $statement->fetchAll();
 
@@ -46,20 +46,24 @@
                     foreach ($systems as $systemKey => $singleSystem) {
                         // Get needed values
                         $id = $singleSystem["id"];
-                        $name = htmlspecialchars($singleSystem["name"]);
-                        $cooldown = htmlspecialchars($singleSystem["cooldown"]);
-                        $maxSeconds = htmlspecialchars($singleSystem["maxSeconds"]);
+                        $name = htmlspecialchars(htmlspecialchars_decode($singleSystem["name"]));
+                        $cooldown = htmlspecialchars(htmlspecialchars_decode($singleSystem["cooldown"]));
+                        $maxSeconds = htmlspecialchars(htmlspecialchars_decode($singleSystem["maxSeconds"]));
 
                         echo <<<END
-                            <div class="accordion-item">
+                            <div id="accordion$id" class="accordion-item">
                                 <h2 class="accordion-header" id="systems-heading$id">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#systems-collapse$id" aria-expanded="true" aria-controls="systems-collapse$id">
+                                <button id="systemAccordion$id" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#systems-collapse$id" aria-expanded="true" aria-controls="systems-collapse$id">
                                     $name
                                 </button>
                                 </h2>
                                 <div id="systems-collapse$id" class="accordion-collapse collapse" aria-labelledby="systems-heading$id" data-bs-parent="#accordionSystems">
                                     <div class="accordion-body">
-                                        <div id="automatic">
+                                        <button type="button" id="settingsButton$id" class="btn btn-secondary shadow-none" style="float: right;" data-bs-toggle="modal" data-bs-target="#settingsModal" data-bs-systemId="$id" data-bs-systemName="$name" data-bs-cooldown="$cooldown" data-bs-maxSeconds="$maxSeconds">
+                                            Einstellungen
+                                        </button>
+
+                                        <div id="automatic" class="mt-3">
                                             <h2 class="mb-3">Automatikmodus (Comming Soon)</h2>
                                             <select id="selectPlant$id" class="form-select" aria-label="Default select example">
                                                 <option selected>Werte manuell eingeben</option>
@@ -71,23 +75,7 @@
             
                                         <hr class="mt-4">
             
-                                        <form id="$id">
-                                            <h2 class="mb-3">Einstellungen</h2>
-            
-                                            <label for="cooldown" class="form-label">Cooldown (in Sekunden)</label>
-                                            <input type="number" id="cooldown$id" class="form-control" aria-describedby="cooldownHelpBlock" value="$cooldown" min="0">
-                                            <div id="passwordHelpBlock" class="form-text">
-                                                0 eintragen für keinen Cooldown
-                                            </div>
-            
-                                            <label for="maxSeconds" class="form-label mt-3">Max. Sekunden / Tag</label>
-                                            <input type="number" id="maxSeconds$id" class="form-control" aria-describedby="maxSecondsHelpBlock" value="$maxSeconds" min="0">
-                                            <div id="maxSecondsHelpBlock" class="form-text">
-                                                0 eintragen für kein Maximum
-                                            </div>
-            
-                                            <hr class="mt-4">
-            
+                                        <form id="$id" class="systemForm">
                                             <h2 class="mt-3 mb-3">Auslöser</h2>
 
                                             <div id="addTriggers$id">
@@ -110,89 +98,131 @@
 
                 ?>
 
-
-
-
-
-
-                <!--<div class="accordion-item">
-                    <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                        System 1
-                    </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
-                        <div class="accordion-body">
-                            <div id="automatic">
-                                <h2 class="mb-3">Automatikmodus</h2>
-                                <select id="selectPlant" class="form-select" aria-label="Default select example">
-                                    <option selected>Werte manuell eingeben</option>
-                                    <option value="1">Pflanzenart 1</option>
-                                    <option value="2">Pflanzenart 2</option>
-                                    <option value="3">Pflanzenart 3</option>
-                                </select>
-                            </div>
-
-                            <hr class="mt-4">
-
-                            <form>
-                                <h2 class="mb-3">Einstellungen</h2>
-
-                                <label for="cooldown" class="form-label">Cooldown (in Sekunden)</label>
-                                <input type="number" id="cooldown" class="form-control" aria-describedby="cooldownHelpBlock" value="0" min="0">
-                                <div id="passwordHelpBlock" class="form-text">
-                                    0 eintragen für keinen Cooldown
+                <!-- Settings Modal -->
+                <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <form id="saveSettingsForm" data-bs-systemId="">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="settingsModalLabel">Einstellungen <b id="settingsModalLabelName">[NAME]</b></h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
+                                <div class="modal-body">
+                                    <label for="settingsInputName" class="form-label">Name</label>
+                                    <input type="text" class="form-control" id="settingsInputName" required>
 
-                                <label for="maxSeconds" class="form-label mt-3">Max. Sekunden / Tag</label>
-                                <input type="number" id="maxSeconds" class="form-control" aria-describedby="maxSecondsHelpBlock" value="0" min="0">
-                                <div id="maxSecondsHelpBlock" class="form-text">
-                                    0 eintragen für kein Maximum
-                                </div>
-
-                                <hr class="mt-4">
-
-                                <h2 class="mt-3 mb-3">Auslöser</h2>
-
-                                <div class="card mb-3">
-                                    <div class="card-body trigger-body">
-                                        <div id="trigger0" class="trigger-card">
-                                            <b>Wenn</b>
-                                            <select id="changeTrigger0" onchange="changeTrigger(0, 1);" class="form-select" aria-label="Auslöser auswählen">
-                                                <option selected></option>
-                                                <option value="time">Uhrzeit</option>
-                                                <option value="temperature">Temperatur</option>
-                                                <option value="humidity">Luftfeuchtigkeit</option>
-                                            </select>
-
-                                            <div id="triggerSecondInput0"></div>
-
-                                            <div id="triggerThirdInput0"></div>
-
-                                            <div id="unit1_0"></div>
-                                        </div>
-
-                                        <b>dann:</b>
-
-                                        <div id="action0" class="trigger-action">
-                                            gieße für <input id="waterSeconds0" type="number" class="form-control" min="1"> Sekunden
-                                        </div>
-
-                                        <button type="button" class="btn btn-outline-danger btn-sm">Entfernen</button>
+                                    <label for="settingsInputCooldown" class="form-label mt-3">Cooldown (in Sekunden)</label>
+                                    <input type="number" id="settingsInputCooldown" class="form-control" aria-describedby="cooldownHelpBlock" min="0" required>
+                                    <div id="cooldownHelpBlock" class="form-text">
+                                        0 eintragen für keinen Cooldown
                                     </div>
+    
+                                    <label for="settingsInputmaxSeconds" class="form-label mt-2">Max. Sekunden / Tag</label>
+                                    <input type="number" id="settingsInputMaxSeconds" class="form-control" aria-describedby="maxSecondsHelpBlock" min="0" required>
+                                    <div id="maxSecondsHelpBlock" class="form-text">
+                                        0 eintragen für kein Maximum
+                                    </div>
+
+                                    <hr class="mt-4 mb-3">
+
+                                    <h3 class="mb-3">System verbinden</h3>
+                                    <button id="apiKeyPasswordModalTriggerButton" type="button" class="btn btn-secondary" data-bs-target="#apiKeyPasswordModal" data-bs-toggle="modal">
+                                        Details abrufen
+                                    </button>
+
+                                    <hr class="mt-4 mb-3">
+
+                                    <h3 class="mb-3">Bewässerungssystem löschen</h3>
+                                    <button id="settingsDeleteModal" type="button" class="btn btn-danger" data-bs-target="#deleteSystemModal" data-bs-toggle="modal">
+                                        System löschen
+                                    </button>
                                 </div>
-
-                                <button type="button" class="btn btn-secondary">Neuen Auslöser hinzufügen</button>
-
-                                <hr>
-
-                                <div class="d-grid">
-                                    <button type="button" class="btn btn-primary btn-lg" style="float: right">Speichern</button>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                                    <div><button type="submit" id="settingsSubmitButton" class="btn btn-primary">Speichern</button></div>
                                 </div>
                             </form>
                         </div>
                     </div>
-                </div>-->
+                </div>
+
+                <!-- API Key password modal -->
+                <div class="modal fade" id="apiKeyPasswordModal" tabindex="-1" aria-labelledby="apiKeyPasswordModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form id="apiKeyPasswordModalForm" data-bs-systemId="">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="apiKeyPasswordModal">API-Key für <b id="apiKeyPasswordModalLabelName">[NAME]</b> abrufen</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <label for="apiKeyPassword" class="form-label">Passwort für <b id="apiKeyPasswordEmail"></b>:</label>
+                                    <input type="password" class="form-control" id="apiKeyPassword" required autofocus>
+                                    <div class="invalid-feedback">Falsches Passwort</div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                                    <input type="submit" id="apiKeyPasswordModalSubmitButton" class="btn btn-primary" value="Weiter">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- API KEY display data -->
+                <div class="modal fade" id="apiKeyDataModal" tabindex="-1" aria-labelledby="apiKeyDataModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="apiKeyDataModal">API-Key für <b id="apiKeyDataModalLabelName">[NAME]</b> abrufen</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+
+                                <div class="alert alert-primary d-flex align-items-center" role="alert">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                                        <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                                    </svg>
+                                    <div>Informationen, wie du dein Bewässerungssystem hinzufügen kannst, findest du <a href="../help/add-system" target="blank">hier</a></div>
+                                </div>
+
+
+                                ID: <p id="apiKeyDataModalIdPlaceholder" style="display: inline"></p><br>
+                                API-Key: <p id="apiKeyDataModalApiKeyPlaceholder" style="display: inline"></p><br>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Schließen</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Delete System Modal -->
+                <div class="modal fade" id="deleteSystemModal" tabindex="-1" aria-labelledby="deleteSystemModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form id="deleteSystemForm" data-bs-systemId="" autocomplete="off">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteSystemModalLabel"><b id="deleteSystemModalLabelName">[NAME]</b> löschen</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p id="deleteSystemBodyText" class="mb-2">Soll dieses Bewässerungssystem wirklich gelöscht werden? Dabei gehen auch alle Statistiken über dieses System verloren. Gib bitte <b id="deleteSystemBodyTextName">[NAME]</b> ein und klicke anschließend auf "Löschen":</p>
+
+                                    <input type="text" class="form-control" id="deleteSystemNameInput" placeholder="[NAME]" required autofocus>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                                    <div><button type="submit" id="deleteSystemSubmitButton" class="btn btn-danger" disabled>Löschen</div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -202,6 +232,10 @@
     <script src="../files/js/dashboard.js"></script>
     <script>
         <?php
+            $userEmail = $_SESSION["userEmail"];
+            echo("var userEmail = '$userEmail';");
+
+
             // Call function to create triggers
             foreach ($systems as $systemKey => $singleSystem) {
                 $systemId = $singleSystem["id"];

@@ -14,23 +14,14 @@ var newCounter = 0;
 var triggerIds = [];
 
 
-
 // Save changed system settings
 $(document).ready(function() {
-    $("form").submit(function() {
+    $(".systemForm").submit(function() {
         let systemid = $(this).attr("id");
-
-        // Get cooldown and max Seconds
-        let cooldown = $(`#cooldown${systemid}`).val();
-        let maxSeconds = $(`#maxSeconds${systemid}`).val();
 
         // organize data
         let sendData = [];
-        let systemData = {
-            "id": systemid,
-            "cooldown": cooldown,
-            "maxSeconds": maxSeconds
-        };
+        let systemData = {"id": systemid};
         sendData.push(systemData);
 
         // Get triggers
@@ -248,3 +239,239 @@ function create_db_triggers(triggerData) {
         $(`#triggerThirdValue${id}`).val(triggerValue1).blur();
     }
 }
+
+
+
+
+
+// Settings Modal
+$("#settingsModal").on("show.bs.modal", function(event) {
+    let button = event.relatedTarget;
+
+    // Get required values
+    let systemId = $(button).attr("data-bs-systemId");
+    let systemName = $(button).attr("data-bs-systemName");
+    let cooldown = $(button).attr("data-bs-cooldown");
+    let maxSeconds = $(button).attr("data-bs-maxSeconds");
+
+    // Insert proper values into modal
+    $("#saveSettingsForm").attr("data-bs-systemId", systemId);
+    $("#settingsModalLabelName").empty().text(systemName);
+    $("#apiKeyPasswordModalTriggerButton").attr("data-bs-systemId", systemId).attr("data-bs-systemName", systemName);
+    $("#settingsDeleteModal").attr("data-bs-systemId", systemId).attr("data-bs-systemName", systemName);
+
+    $("#settingsInputName").val(systemName);
+    $("#settingsInputCooldown").val(cooldown);
+    $("#settingsInputMaxSeconds").val(maxSeconds);
+});
+
+// Save settings modal
+$(document).ready(function() {
+    $("#saveSettingsForm").submit(function() {
+        // Show user that the thing is loading and saving
+        $("#settingsSubmitButton").prop("disabled", true).prepend('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ');
+
+
+        let systemId = $("#saveSettingsForm").attr("data-bs-systemId");
+
+        // Get needed values
+        let name = $("#settingsInputName").val();
+        let cooldown = $("#settingsInputCooldown").val();
+        let maxSeconds = $("#settingsInputMaxSeconds").val();
+
+        // Organize data
+        let sendData = {
+            "systemId":   systemId,
+            "name":       name,
+            "cooldown":   cooldown,
+            "maxSeconds": maxSeconds
+        }
+
+        // Send data to PHP script
+        $.ajax({
+            url: "../files/ajax/saveSystemSettings.php",
+            type: "post",
+            data: sendData,
+            success: function(response) {
+                //alert(response);
+
+                if (response == "Success") {
+                    bootstrap.Modal.getInstance($("#settingsModal")).hide();
+
+                    let button = $(`#settingsButton${systemId}`);
+
+                    // Update data on page
+                    $(button).attr("data-bs-systemName", name);
+                    $(button).attr("data-bs-cooldown", cooldown);
+                    $(button).attr("data-bs-maxSeconds", maxSeconds);
+
+                    $(`#systemAccordion${systemId}`).empty().text(name);
+                } else {
+                    alert("Something went wrong");
+
+                    $("#settingsSubmitButton").prop("disabled", false).find("span").remove();
+                    $("#settingsModal").unbind("hidden.bs.modal.saveEvent");
+                }
+
+                // Reset "save" button when modal is closed
+                $("#settingsModal").on("hidden.bs.modal.saveEvent", function() {
+                    $("#settingsSubmitButton").prop("disabled", false).find("span").remove();
+                    $(this).unbind("hidden.bs.modal.saveEvent");
+                });
+            }
+        })
+        
+        return(false);
+    })
+});
+
+
+
+// API-Key Modal
+// API-Key password Modal
+$("#apiKeyPasswordModal").on("show.bs.modal", function(event) {
+    let button = event.relatedTarget;
+
+    // Get required values
+    let systemId = $(button).attr("data-bs-systemId");
+    let systemName = $(button).attr("data-bs-systemName");
+
+    // Insert proper values into modal
+    $("#apiKeyPasswordModalForm").attr("data-bs-systemId", systemId);
+    $("#apiKeyPasswordModalLabelName").text(systemName);
+    $("#apiKeyPasswordEmail").text(userEmail);
+});
+// Focus on password input field when modal has finished animation
+$("#apiKeyPasswordModal").on("shown.bs.modal", function() {
+    $("#apiKeyPassword").focus();
+});
+// Remove password from input when modal is closed
+$("#apiKeyPasswordModal").on("hidden.bs.modal", function() {
+    $("#apiKeyPassword").val("").removeClass("is-invalid");
+});
+// Remove "is-invalid" class from password input when input is modified
+$("#apiKeyPassword").on("input", function() {
+    $(this).removeClass("is-invalid");
+})
+
+// Remove API-key from modal when that is closed
+$("#apiKeyDataModal").on("hidden.bs.modal", function() {
+    $("#apiKeyDataModalApiKeyPlaceholder").text("");
+});
+
+// Submit API-Key password Modal
+$(document).ready(function() {
+    $("#apiKeyPasswordModalForm").submit(function() {
+        // Deactivate input and submit button
+        $("#apiKeyPassword").attr("disabled", true);
+        $("#apiKeyPasswordModalSubmitButton").attr("disabled", true);
+        $("#apiKeyPassword").removeClass("is-invalid");
+
+        let systemId = $("#apiKeyPasswordModalForm").attr("data-bs-systemId");
+
+        // Send data to PHP script
+        $.ajax({
+            url: "../files/ajax/getApiKey.php",
+            type: "post",
+            data: {"systemId": systemId, "password": $("#apiKeyPassword").val()},
+            success: function(response) {
+                try {
+                    response = JSON.parse(response);
+                } catch {}
+
+                if (response[0] == "Success") {
+                    // Hide this modal
+                    bootstrap.Modal.getInstance($("#apiKeyPasswordModal")).hide();
+
+                    // Show the modal with data
+                    new bootstrap.Modal($("#apiKeyDataModal")).show();
+
+                    // Insert data
+                    $("#apiKeyDataModalLabelName").text(response[1]);
+                    $("#apiKeyDataModalIdPlaceholder").text(systemId);
+                    $("#apiKeyDataModalApiKeyPlaceholder").text(response[2]);
+                } else if (response == "wrongPassword") {
+                    $("#apiKeyPassword").addClass("is-invalid");
+                } else {
+                    alert("Something went wrong");
+                }
+
+                $("#apiKeyPassword").attr("disabled", false);
+                $("#apiKeyPasswordModalSubmitButton").attr("disabled", false);
+            }
+        })
+        
+        return(false);
+    })
+});
+
+
+
+
+// Delete System Modal
+$("#deleteSystemModal").on("show.bs.modal", function(event) {
+    let button = event.relatedTarget;
+
+    // Hide loading animation if it is shown from a previous deletion
+    $("#deleteSystemSubmitButton").find("span").remove();
+
+    // Get required values
+    let systemId = $(button).attr("data-bs-systemId");
+    let systemName = $(button).attr("data-bs-systemName");
+
+    // Insert proper values into modal
+    $("#deleteSystemForm").attr("data-bs-systemId", systemId);
+    $("#deleteSystemModalLabelName").text(systemName);
+    $("#deleteSystemBodyTextName").text(systemName);
+    $("#deleteSystemNameInput").attr("placeholder", systemName).attr("data-bs-systemName", systemName).val("");
+    $("#deleteSystemSubmitButton").attr("disabled", true);
+});
+// Focus on delete system input field when modal has finished animation
+$("#deleteSystemModal").on("shown.bs.modal", function() {
+    $("#deleteSystemNameInput").focus();
+})
+
+// Delete System check input
+$("#deleteSystemNameInput").on("input", function() {
+    // Get required values
+    let systemName = $(this).attr("data-bs-systemName").toLowerCase();
+    let inputValue = $(this).val().toLowerCase();
+
+    if (systemName == inputValue) {
+        $("#deleteSystemSubmitButton").attr("disabled", false);
+    } else {
+        $("#deleteSystemSubmitButton").attr("disabled", true);
+    }
+});
+
+// Submit delete system Modal
+$(document).ready(function() {
+    $("#deleteSystemForm").submit(function() {
+        // Show user that the thing is loading and deleting the system
+        $("#deleteSystemSubmitButton").attr("disabled", true).prepend('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ');
+
+        let systemId = $("#deleteSystemForm").attr("data-bs-systemId");
+
+        // Send data to PHP script
+        $.ajax({
+            url: "../files/ajax/deleteSystem.php",
+            type: "post",
+            data: {"systemId": systemId},
+            success: function(response) {
+                if (response == "Success") {
+                    // Close Modal
+                    bootstrap.Modal.getInstance($("#deleteSystemModal")).hide();
+
+                    // Remove system from page
+                    $(`#accordion${systemId}`).remove();
+                } else {
+                    // Give an error message when something went wrong and enable form submission again
+                    alert("Something went wrong");
+                    $("#deleteSystemSubmitButton").prop("disabled", false).find("span").remove();
+                }
+            }
+        })
+        
+        return(false);  // Don't reload the page after form submission
+    })
+});

@@ -14,11 +14,9 @@
 
     // System data
     $systemid = htmlspecialchars(@$systemData["id"]);
-    $cooldown = htmlspecialchars(@$systemData["cooldown"]);
-    $maxSeconds = htmlspecialchars(@$systemData["maxSeconds"]);
 
     // Check if all system data exists
-    if (empty($systemid) || $cooldown == "" || $maxSeconds == "") die("missingData");
+    if (empty($systemid)) die("missingData");
 
     // Check if system exists in DB and user has privileges to write to it
     $statement = $pdo->prepare("SELECT * FROM systems WHERE id = :id");
@@ -26,10 +24,6 @@
     $systemDbData = $statement->fetch();
 
     if ($systemDbData === false || $systemDbData["userid"] != $_SESSION["userid"]) die("403");
-
-    // Write system data to DB
-    $statement = $pdo->prepare("UPDATE systems SET cooldown = :cooldown, maxSeconds = :maxSeconds WHERE id = :id");
-    $statement->execute(array("id" => $systemid, "cooldown" => $cooldown, "maxSeconds" => $maxSeconds));
 
 
     // TRIGGERS
