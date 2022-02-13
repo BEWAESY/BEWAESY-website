@@ -20,7 +20,7 @@
     $result = $statement->execute(array("id" => $systemId));
     $systemDbData = $statement->fetch();
 
-    if ($systemDbData === false || $systemDbData["userid"] != $_SESSION["userid"]) die(403);
+    if ($systemDbData === false || $systemDbData["userid"] != $_SESSION["userid"]) die("403");
 
 
     // Check if user password is correct

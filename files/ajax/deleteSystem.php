@@ -14,7 +14,7 @@
     if (empty($systemId)) die("400");
 
 
-    // Check if user is allowd to delete this system
+    // Check if user is allowed to delete this system
     $statement = $pdo->prepare("SELECT * FROM systems WHERE id = :id");
     $result = $statement->execute(array("id" => $systemId));
     $systemDbData = $statement->fetch();
