@@ -30,7 +30,7 @@
         $output += [$singleSystem["id"] => array("name" => $singleSystem["name"], "eventCounterData" => array())];
 
         // Get logs for this system
-        $statement = $pdo->prepare("SELECT * FROM systemlog WHERE systemid = :systemid AND timestamp >= Date(:mondayDate) AND timestamp <= DATE_ADD(:mondayDate, INTERVAL 6 DAY)");
+        $statement = $pdo->prepare("SELECT * FROM systemlog WHERE systemid = :systemid AND timestamp >= Date(:mondayDate) AND timestamp <= DATE_ADD(:mondayDate, INTERVAL 7 DAY)");
         $result = $statement->execute(array("systemid" => $singleSystem["id"], "mondayDate" => $mondayDate));
         $systemlog = $statement->fetchAll();
 
