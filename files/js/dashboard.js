@@ -412,6 +412,9 @@ $(document).ready(function() {
 $("#deleteSystemModal").on("show.bs.modal", function(event) {
     let button = event.relatedTarget;
 
+    // Hide loading animation if it is shown from a previous deletion
+    $("#deleteSystemSubmitButton").find("span").remove();
+
     // Get required values
     let systemId = $(button).attr("data-bs-systemId");
     let systemName = $(button).attr("data-bs-systemName");
@@ -444,6 +447,9 @@ $("#deleteSystemNameInput").on("input", function() {
 // Submit delete system Modal
 $(document).ready(function() {
     $("#deleteSystemForm").submit(function() {
+        // Show user that the thing is loading and deleting the system
+        $("#deleteSystemSubmitButton").attr("disabled", true).prepend('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> ');
+
         let systemId = $("#deleteSystemForm").attr("data-bs-systemId");
 
         // Send data to PHP script
@@ -458,10 +464,14 @@ $(document).ready(function() {
 
                     // Remove system from page
                     $(`#accordion${systemId}`).remove();
+                } else {
+                    // Give an error message when something went wrong and enable form submission again
+                    alert("Something went wrong");
+                    $("#deleteSystemSubmitButton").prop("disabled", false).find("span").remove();
                 }
             }
         })
         
-        return(false);
+        return(false);  // Don't reload the page after form submission
     })
 });

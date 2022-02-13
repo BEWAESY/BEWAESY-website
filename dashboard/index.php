@@ -217,7 +217,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Abbrechen</button>
-                                    <input type="submit" id="deleteSystemSubmitButton" class="btn btn-danger" value="Löschen" disabled>
+                                    <div><button type="submit" id="deleteSystemSubmitButton" class="btn btn-danger" disabled>Löschen</div>
                                 </div>
                             </form>
                         </div>
