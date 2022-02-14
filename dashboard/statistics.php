@@ -12,7 +12,7 @@
     
     // Get data
     // Get system data
-    $statement = $pdo->prepare("SELECT id, name FROM systems WHERE userid = :userid");
+    $statement = $pdo->prepare("SELECT id, name FROM systems WHERE userid = :userid ORDER BY created");
     $result = $statement->execute(array("userid" => $_SESSION["userid"]));
     $systems = $statement->fetchAll();
 

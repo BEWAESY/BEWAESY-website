@@ -17,7 +17,7 @@
 
     
     // Get systems in user account
-    $statement = $pdo->prepare("SELECT * FROM systems WHERE userid = :userid");
+    $statement = $pdo->prepare("SELECT * FROM systems WHERE userid = :userid ORDER BY created");
     $result = $statement->execute(array("userid" => $_SESSION["userid"]));
     $systems = $statement->fetchAll();
 
@@ -27,7 +27,7 @@
     // Loop through each system and get log data
     foreach ($systems as $systemkey => $singleSystem) {
         // Prepare array
-        $output += [$singleSystem["id"] => array("name" => $singleSystem["name"], "eventCounterData" => array())];
+        $output[] = array("id" => $singleSystem["id"], "name" => $singleSystem["name"], "eventCounterData" => array());
 
         // Get logs for this system
         $statement = $pdo->prepare("SELECT * FROM systemlog WHERE systemid = :systemid AND timestamp >= Date(:mondayDate) AND timestamp <= DATE_ADD(:mondayDate, INTERVAL 7 DAY)");
@@ -43,7 +43,7 @@
                 return(substr($var["timestamp"], 0, -9) == $checkDate);
             });
 
-            $output[$singleSystem["id"]]["eventCounterData"] += [$day => count($singleDay)];
+            $output[array_key_last($output)]["eventCounterData"] += [$day => count($singleDay)];
         }
     }
 
