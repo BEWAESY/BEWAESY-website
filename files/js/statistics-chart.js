@@ -59,16 +59,20 @@ function createChart(initialData) {
 
     let eventCounterChartDataset = [];
 
+    let colorCycle = 0;
+
     Object.values(initialData).forEach(function(singleSystem) {
-        let color = generateRandomColor();
+        if (colorCycle >= 6) colorCycle = 0;  // Reset counter if all colors are already used
+
+        let color = generateChartColor(colorCycle++);
+
         eventCounterChartDataset.push({
             label: singleSystem["name"],
-            backgroundColor: color,
-            borderColor: color,
+            borderColor: color[1],
+            backgroundColor: color[0],
             data: singleSystem["eventCounterData"],
         })
     });
-
 
     const eventCounterChartData = {
         datasets: eventCounterChartDataset
@@ -77,16 +81,23 @@ function createChart(initialData) {
     const eventCounterChartConfig = {
         type: 'bar',
         data: eventCounterChartData,
-        options: {}
+        options: {
+            elements: {
+                bar: {
+                    borderWidth: 2,
+                }
+            }
+        }
     };
 
     new Chart(
         document.getElementById('eventCounterChart'),
         eventCounterChartConfig
     );
+}
 
-
-    function generateRandomColor() {
-        return `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
-    }
+function generateChartColor(colorCycle) {
+    let backgroundColors = ["#ffb1c1", "#9ad0f5", "#ffe6aa", "#a5dfdf", "#ccb2ff", "#e4e5e7"];
+    let borderColors = ["#ff8ba3", "#36a2eb", "#ffcd56", "#4bc0c0", "#9966ff", "#c9cbcf"];
+    return [backgroundColors[colorCycle], borderColors[colorCycle]];
 }
