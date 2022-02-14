@@ -1,5 +1,5 @@
 <!--<nav class="navbar navbar-light bg-light" style="height: 54px; box-shadow: 1px 0 10px rgb(156, 156, 156);">-->
-<nav class="navbar navbar-light bg-light" style="height: 54px">
+<nav class="navbar navbar-light" style="height: 54px; background-color: #f2f2f2;">
     <div class="container-fluid">
         <div class="justify-content-start">
             <a class="navbar-brand" href="<?php echo($filePath); ?>">
