@@ -51,7 +51,7 @@
                 <div class="card-header">
                     <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="giesszeiten-tab" data-bs-toggle="tab" data-bs-target="#giesszeiten" type="button" role="tab" aria-controls="giesszeiten" aria-selected="true">Gießzeiten</button>
+                            <button class="nav-link active" id="giesszeiten-tab" data-bs-toggle="tab" data-bs-target="#giesszeiten" type="button" role="tab" aria-controls="giesszeiten" aria-selected="true">Auslöser</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="ereignisse-tab" data-bs-toggle="tab" data-bs-target="#ereignisse" type="button" role="tab" aria-controls="ereignisse" aria-selected="false">Letzte Ereignisse</button>
@@ -65,8 +65,6 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="giesszeiten" role="tabpanel" aria-labelledby="giesszeiten-tab">
                             <!-- Gießzeiten -->
-                            <h1>Gießzeiten</h1>
-
                             <label for="weekInput" class="form-label">Woche auswählen:</label>
                             <input type="date" class="form-control" id="weekInput" style="width: auto;" onchange="dateChange();">
                             

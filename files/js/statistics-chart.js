@@ -86,6 +86,16 @@ function createChart(initialData) {
                 bar: {
                     borderWidth: 2,
                 }
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: "Auslöser"
+                },
+                subtitle: {
+                    display: true,
+                    text: "Zeigt an, wie oft ein Bewässerungssystem an einem Tag gegossen wurde"
+                }
             }
         }
     };
