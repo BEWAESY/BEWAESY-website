@@ -111,3 +111,31 @@ function generateChartColor(colorCycle) {
     let borderColors = ["#ff8ba3", "#36a2eb", "#ffcd56", "#4bc0c0", "#9966ff", "#c9cbcf"];
     return [backgroundColors[colorCycle], borderColors[colorCycle]];
 }
+
+
+// Show the chart from last week
+function weekLast(inputId) {
+    // Get required data
+    let dateInput = new Date($(inputId).val());
+
+    // Subtract 7 days from the current date
+    dateInput.setDate(dateInput.getDate() - 7);
+
+    // Convert the date into the right format for the input and insert it
+    $(inputId).val(dateInput.toISOString().slice(0, 10));
+}
+
+// Show the chart from next week
+function weekNext(inputId) {
+    // Get required data
+    let dateInput = new Date($(inputId).val());
+
+    // Add 7 days to the current date
+    dateInput.setDate(dateInput.getDate() + 7);
+
+    // Check if the date lies in the future, and if yes, go to this day
+    if (dateInput > new Date()) dateInput = new Date();
+
+    // Convert the date into the right format for the input and insert it
+    $(inputId).val(dateInput.toISOString().slice(0, 10));
+}

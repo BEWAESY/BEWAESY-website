@@ -67,6 +67,11 @@
                             <!-- Gießzeiten -->
                             <label for="weekInput" class="form-label">Woche auswählen:</label>
                             <input type="date" class="form-control" id="weekInput" style="width: auto;" onchange="dateChange();">
+
+                            <div class="btn-group btn-group-sm mt-2" role="group" aria-label="Basic outlined example">
+                                <button type="button" class="btn btn-outline-secondary shadow-none" onclick="weekLast('#weekInput'); dateChange();">Eine Woche zurück</button>
+                                <button type="button" class="btn btn-outline-secondary shadow-none" onclick="weekNext('#weekInput'); dateChange();">Eine Woche vor</button>
+                            </div>
                             
                             <canvas class="my-4 w-100" id="eventCounterChart" width="900" height="380"></canvas>
                         </div>
