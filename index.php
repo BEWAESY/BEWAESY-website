@@ -10,8 +10,9 @@
     <title>BEWÄSY</title>
     <link rel="icon" type="image/x-icon" href="files/images/logo.svg">
 
-    <link href="files/css/main.css" rel="stylesheet">
     <link href="files/addons/bootstrap.min.css" rel="stylesheet">
+    <link href="files/css/main.css" rel="stylesheet">
+    <link href="files/css/landingPage.css" rel="stylesheet">
 </head>
 <body>
     <?php include "files/php/templates/nav.php" ?>
@@ -68,8 +69,9 @@
             </div>
         </div>
 
-        <hr class="mb-4" style="height: 3px">
+        <hr class="mb-4" style="height: 2px">
 
+        <!-- Software + GitHub -->
         <div class="row justify-content-center mb-5">
             <div class="col-md-6 align-self-center">
                 <h3>Unser Code</h3>
@@ -83,6 +85,25 @@
             </div>
             <div class="col-md-6">
                 <img src="files/images/slider/Code.jpg" alt="..." class="w-100">
+            </div>
+        </div>
+
+        <hr class="mb-4" style="height: 2px">
+
+        <!-- BW-Stiftung -->
+        <div class="row justify-content-center">
+            <div class="col-md-9 order-md-2 align-self-center mt-4">
+                <h3>Baden-Württemberg Stiftung</h3>
+                <p>Unser Projekt wurde im Rahmen des Programms "mikro makro mint" von der Baden-Württemberg Stiftung gefördert.</p>
+                <a href="https://www.bwstiftung.de/de/bereiche-programme/gesellschaft-kultur/mikro-makro-mint" class="btn btn-bwstiftung" target="blank">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M14 2.5a.5.5 0 0 0-.5-.5h-6a.5.5 0 0 0 0 1h4.793L2.146 13.146a.5.5 0 0 0 .708.708L13 3.707V8.5a.5.5 0 0 0 1 0v-6z"/>
+                    </svg>    
+                    Weitere Infos
+                </a>
+            </div>
+            <div class="col-md-3 order-md-1 mt-4">
+                <img src="files/images/slider/BWS_Logo_Standard_rgb.jpg" alt="..." class="w-100">
             </div>
         </div>
     </div>
