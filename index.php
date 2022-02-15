@@ -24,13 +24,13 @@
         </div>
         <div class="carousel-inner" style="max-height: 500px;">
             <div class="carousel-item active">
-                <img src="files/images/slider/Blumentopf1.png" class="d-block w-100" alt="...">
+                <img src="files/images/slider/3D-Drucker.jpg" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
                 <img src="files/images/slider/Technikum.jpg" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-                <img src="files/images/slider/3D-Drucker.jpg" class="d-block w-100" alt="...">
+                <img src="files/images/slider/Blumentopf1.png" class="d-block w-100" alt="...">
             </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
