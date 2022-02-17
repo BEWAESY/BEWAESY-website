@@ -56,9 +56,6 @@
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="ereignisse-tab" data-bs-toggle="tab" data-bs-target="#ereignisse" type="button" role="tab" aria-controls="ereignisse" aria-selected="false">Letzte Ereignisse</button>
                         </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link disabled" id="sensordaten-tab" data-bs-toggle="tab" data-bs-target="#sensordaten" type="button" role="tab" aria-controls="sonsordaten" aria-selected="false">Sensordaten der Pflanze</button>
-                        </li>
                     </ul>
                 </div>
                 <div class="card-body">
@@ -109,11 +106,6 @@
                                     END;
                                 }
                             ?>
-                        </div>
-
-                        <div class="tab-pane fade" id="sensordaten" role="tabpanel" aria-labelledby="sensordaten-tab">
-                            <!-- Sensordaten der Pflanze -->
-                            Sensordaten der Pflanze
                         </div>
                     </div>
                 </div>
