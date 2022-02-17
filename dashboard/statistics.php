@@ -72,6 +72,12 @@
                                 <button type="button" class="btn btn-outline-secondary shadow-none" onclick="weekLast('#weekInput'); dateChange();">Eine Woche zurück</button>
                                 <button type="button" class="btn btn-outline-secondary shadow-none" onclick="weekNext('#weekInput'); dateChange();">Eine Woche vor</button>
                             </div>
+
+                            <br>
+
+                            <div id="chartSpinner" class="spinner-border text-secondary mt-2" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
                             
                             <canvas class="my-4 w-100" id="eventCounterChart" width="900" height="380"></canvas>
                         </div>

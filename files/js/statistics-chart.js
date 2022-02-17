@@ -21,6 +21,9 @@ function dateChange() {
     // Check if Monday has changed with new input, and abort if not
     if (dateInputWeek.toDateString() == $("#weekInput").attr("data-bs-monday")) return;
 
+    // Show spinner
+    $("#chartSpinner").show();
+
     
     // Send data to PHP
     $.ajax({
@@ -33,6 +36,9 @@ function dateChange() {
             } catch {}
 
             if (response[0] == "Success") {
+                // Hide spinner
+                $("#chartSpinner").hide();
+
                 // Create the chart
                 createChart(response[1]);
 
@@ -41,6 +47,9 @@ function dateChange() {
             } else {
                 alert("Something went wrong");
             }
+
+            // Hide spinner
+            $("#chartSpinner").hide();
         }
     });
 }
