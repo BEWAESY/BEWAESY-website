@@ -15,7 +15,7 @@
 <body>
     <?php include "files/php/templates/nav.php" ?>
 
-    <div style="margin: 30px">
+    <div class="container mt-3">
         <h1>Impressum</h1>
 
         <h2>Angaben gem&auml;&szlig; &sect; 5 TMG</h2>
