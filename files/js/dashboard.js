@@ -14,6 +14,39 @@ var newCounter = 0;
 var triggerIds = [];
 
 
+
+// Show online/offline badge
+function onlineBadge() {
+    // Ask PHP script for data
+    $.ajax({
+        url: "../files/ajax/getSystemOnlineData.php",
+        method: "POST",
+        success: function(response) {
+            try {
+                response = JSON.parse(response);
+            } catch {}
+
+            for (system of response) {
+                // Get timestamp and add 120 seconds to it
+                let lastCall = new Date(system["lastCall"]);
+                let dateIntervall = new Date(lastCall.getTime() + 2 * 60000);
+
+                // Check if systems was not active for more than two minutes
+                if (new Date() < dateIntervall) {
+                    // System was active in the last two minutes, label it as online
+                    $(`#systemBadge${system["id"]}`).removeClass("bg-secondary").addClass("bg-success").text("Online");
+                } else {
+                    // System was not active in the last two minutes, label it as offline
+                    $(`#systemBadge${system["id"]}`).removeClass("bg-success").addClass("bg-secondary").text("Offline");
+                }
+            }
+        }
+    });
+}
+onlineBadge();
+setTimeout(onlineBadge, 60000);
+
+
 // Save changed system settings
 $(document).ready(function() {
     $(".systemForm").submit(function() {
