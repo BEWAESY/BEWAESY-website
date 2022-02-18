@@ -54,7 +54,7 @@
                             <div id="accordion$id" class="accordion-item">
                                 <h2 class="accordion-header" id="systems-heading$id">
                                 <button id="systemAccordion$id" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#systems-collapse$id" aria-expanded="true" aria-controls="systems-collapse$id">
-                                    $name <span id="systemBadge$id" class="badge ms-2"></span>
+                                    <div id="systemAccordionName$id">$name</div> <span id="systemBadge$id" class="badge ms-2"></span>
                                 </button>
                                 </h2>
                                 <div id="systems-collapse$id" class="accordion-collapse collapse" aria-labelledby="systems-heading$id" data-bs-parent="#accordionSystems">

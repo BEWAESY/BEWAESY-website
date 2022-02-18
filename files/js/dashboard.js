@@ -338,7 +338,7 @@ $(document).ready(function() {
                     $(button).attr("data-bs-cooldown", cooldown);
                     $(button).attr("data-bs-maxSeconds", maxSeconds);
 
-                    $(`#systemAccordion${systemId}`).empty().text(name);
+                    $(`#systemAccordionName${systemId}`).empty().text(name);
                 } else {
                     alert("Something went wrong");
 
