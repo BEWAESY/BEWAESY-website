@@ -42,7 +42,11 @@
                     $name = htmlspecialchars(htmlspecialchars_decode($singleSystem["name"]));
                     $temperature = htmlspecialchars(htmlspecialchars_decode($singleSystem["temperature"]));
                     $humidity = htmlspecialchars(htmlspecialchars_decode($singleSystem["humidity"]));
-                    $date = htmlspecialchars(htmlspecialchars_decode($singleSystem["lastCall"]));
+
+                    $date = new DateTime($singleSystem["lastCall"], new DateTimeZone("UTC"));
+                    $dateResult = $date->setTimezone(new DateTimeZone("Europe/Berlin"))->format("d.m.Y H:i:s");
+
+
 
                     echo <<<END
                         <div class="card" style="margin: 20px;">
@@ -69,7 +73,7 @@
                                         <p class="mb-0 ms-2">Luftfeuchtigkeit: $humidity %</p>
                                     </div>
                                 </div>
-                                <p class="mt-2 mb-0">Daten von: $date</p>
+                                <p class="mt-2 mb-0">Daten von: $dateResult</p>
                             </div>
                         </div>
                     END;
